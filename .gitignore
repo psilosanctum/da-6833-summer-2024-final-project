@@ -33,6 +33,7 @@
 
 # Folder for large files
 results/large-files/*
+data/csv-data/*
 
 # But we want to commit the folder and the readme!
 !results/large-files/readme.md
