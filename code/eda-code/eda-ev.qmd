@@ -11,7 +11,7 @@ execute:
 
 ```{python}
 #load needed packages. make sure they are installed.
-from pandas import read_csv, set_option, merge, DataFrame, concat
+from pandas import read_csv, set_option, merge, DataFrame, concat, read_json
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -23,6 +23,9 @@ import statsmodels.api as sm
 import statsmodels
 from statsmodels.graphics.gofplots import ProbPlot
 from scipy import stats
+import geojson
+import folium
+import json
 set_option('display.max_columns', None)
 ```
 
@@ -42,7 +45,7 @@ df.columns.tolist()
 Vehicle Brand Aggregation
 ```{python}
 sns.set_style('darkgrid')
-zip_code_count = df.groupby(['ZIPCODE', 'Electric Vehicle Type']).agg({
+zip_code_count = df.groupby(['ZIPCODE']).agg({
     'Vehicle Count': 'sum',
 }).reset_index()
 fig, axes = plt.subplots(2, 1, figsize=(15,15))
@@ -50,11 +53,56 @@ sns.histplot(ax=axes[0], data=zip_code_count, y=zip_code_count['Vehicle Count'])
 log_zip_code_count = zip_code_count.copy()
 log_zip_code_count['Vehicle Count'] = np.log(zip_code_count['Vehicle Count'])
 sns.histplot(ax=axes[1], data=log_zip_code_count, y=log_zip_code_count['Vehicle Count'])
+zip_code_count
 ```
 
-
 ```{python}
-fig, axes = plt.subplots(2, 1, figsize=(15,15))
+us_zips_df = read_csv(base_dir + 'data/raw-data/uszips.csv')
+wa_zips = us_zips_df.loc[us_zips_df['state_id'] == 'WA']
+wa_zips = wa_zips[['ZIPCODE', 'lat', 'lng', 'population']]
+merge_zips = merge(wa_zips, zip_code_count, on='ZIPCODE')
+# print(merge_zips)
+test = base_dir + 'data/raw-data/counties.geojson'
+with open(test) as f:
+    gj = geojson.load(f)
+    # print(gj['features'])
+# countries = ["53"]
+# new_list = []
+# features = gj['features'][0]['properties']['STATEFP']
+features = gj['features']
+print(features[0])
+# for i in features:
+#     # print(i)
+#     if i['properties']['STATEFP'] == '53':
+#         new_list.append(i)
+#     else:
+#         pass
+# final = json.dumps(new_list, indent=2)
+# print(gj)
+mapit = folium.Map(location=[122.511983, 37.77113])
+
+for i in features:
+    if i['properties']['STATEFP'] == '53':
+        print(i)
+        folium.Choropleth(geo_data=i['geometry']['coordinates'][0][0],
+            data=merge_zips,
+            columns=['lat', 'lng', 'Vehicle Count'],
+            key_on='geometry.coordinates',
+            fill_color='magma',
+            line_color='magma'
+        ).add_to(mapit)
+# mapit.save('test.html')
+# coordinates = []
+# for zip_code in zip_code_count['ZIPCODE']:
+#     print(zip_code)
+#     geocode_result = geopandas.
+    # geocode_result = gmaps.geocode(zip_code)
+    # lat = geocode_result[0][‘geometry’][‘location’][‘lat’]
+    # lng = geocode_result[0][‘geometry’][‘location’][‘lng’]
+    # coordinates.append((lat, lng))
+```
+
+```{python} fig, axes = plt.subplots(2, 1, figsize=(15,15))
 sns.boxplot(ax=axes[0], data=zip_code_count, x=zip_code_count['Vehicle Count'])
 log_zip_code_count = zip_code_count.copy()
 log_zip_code_count['Vehicle Count'] = np.log(zip_code_count['Vehicle Count'])
@@ -64,7 +112,7 @@ sns.boxplot(ax=axes[1], data=log_zip_code_count, x=log_zip_code_count['Vehicle C
 MAKE AND ELECTRIC VEHICLE TYPE
 ```{python}
 sns.set_style('darkgrid')
-make_ev_type = df.groupby(['Make', 'Electric Vehicle Type']).agg({
+make_ev_type = df.groupby(['Make']).agg({
     'Vehicle Count': 'sum',
 }).reset_index()
 fig, axes = plt.subplots(2, 1, figsize=(15,15))
@@ -76,10 +124,10 @@ sns.histplot(ax=axes[1], data=log_make_ev_type, y=log_make_ev_type['Vehicle Coun
 
 ```{python}
 fig, axes = plt.subplots(2, 1, figsize=(15,15))
-sns.boxplot(ax=axes[0], data=make_ev_type, x=make_ev_type['Electric Vehicle Type'], y=make_ev_type['Vehicle Count'])
+sns.boxplot(ax=axes[0], data=make_ev_type)
 log_make_ev_type = make_ev_type.copy()
 log_make_ev_type['Vehicle Count'] = np.log(make_ev_type['Vehicle Count'])
-sns.boxplot(ax=axes[1], data=log_make_ev_type, x=make_ev_type['Electric Vehicle Type'], y=log_make_ev_type['Vehicle Count'])
+sns.boxplot(ax=axes[1], data=log_make_ev_type)
 ```
 
 MAKE AND Clean Alt Fuel
@@ -155,23 +203,14 @@ for i in columns_list:
 
 ZIP CODE ONLY
 ```{python}
-amount_brand_df = df.groupby(['ZIPCODE', 'Electric Vehicle Type'])[numeric_cols].mean(numeric_only=True).reset_index()
-brand_df = df.groupby(['ZIPCODE', 'Electric Vehicle Type']).agg({
+amount_brand_df = df.groupby(['ZIPCODE'])[numeric_cols].mean(numeric_only=True).reset_index()
+brand_df = df.groupby(['ZIPCODE']).agg({
     'Vehicle Count': 'sum',
     'Electric Range': 'mean'
 }).reset_index()
-merged_df = merge(brand_df, amount_brand_df, on=['ZIPCODE', 'Electric Vehicle Type'])
-label_encoder = LabelEncoder()
-label_encoder.fit(merged_df['Electric Vehicle Type'])
-encoded_labels = label_encoder.transform(merged_df['Electric Vehicle Type'])
-merged_df['Electric Vehicle Type'] = encoded_labels
-# print(merged_df['Vehicle Count'].sort_values(ascending=True).unique().tolist())
+merged_df = merge(brand_df, amount_brand_df, on=['ZIPCODE'])
 merged_df = merged_df.sort_values('Vehicle Count', ascending=False)
-print(merged_df)
 
-# merged_df['Vehicle Count'] = np.log(merged_df['Vehicle Count'])
-# merged_df = merged_df.loc[(merged_df['Vehicle Count'] < 5.0)]
-merged_df = merged_df.loc[(merged_df['Vehicle Count'] != 5.187386) & (merged_df['ZIPCODE'] != 98134.0)]
 X_df = merged_df
 Y_df = merged_df[['Vehicle Count']]
 
@@ -254,12 +293,11 @@ X = DataFrame(X_train, columns=features)
 Y = DataFrame(y_train, columns=['Vehicle Count'])
 dataframe = concat([X, Y], axis=1)
 dataframe
-# results3.summary()
+results3.summary()
 features
 ```
 
 ```{python}
-
 # model values
 model_fitted_y = results3.fittedvalues
 
@@ -399,27 +437,26 @@ plt.show()
 # merged_df = merged_df.loc[(merged_df['Vehicle Count'] != 1.94591)]
 # print(merged_df.loc[merged_df['Vehicle Count'] < 5].sort_values('Vehicle Count', ascending=False).head(30))
 X_df = merged_df.copy()
-# Y_df = merged_df[['Vehicle Count']]
-# Y_df = np.log(Y_df['Vehicle Count'])
+Y_df = merged_df[['Vehicle Count']]
+Y_df = np.log(Y_df)
 
 X_features = [
- 'Electric Vehicle Type',
- 'Adjust gross income (AGI) [8]',
- 'Total income amount',
-#  'State and local income tax refunds amount',
- 'Taxable pensions and annuities amount',
+#  'Adjust gross income (AGI) [8]',
+#  'Total income amount',
+ 'State and local income tax refunds amount',
+#  'Taxable pensions and annuities amount',
  'Number of farm returns',
  'Total statutory adjustments amount',
-#  'Self-employed (Keogh) retirement plans amount',
+ 'Self-employed (Keogh) retirement plans amount',
  'Total standard deduction amount',
- 'Basic standard deduction amount',
- 'Additional standard deduction amount',
+#  'Basic standard deduction amount',
+#  'Additional standard deduction amount',
 #  'Total medical and dental expense deduction amount',
  'Limited state and local taxes',
  'Home mortgage from personal seller amount',
  'Alternative minimum tax amount',
  'Child and dependent care credit amount',
- 'Net premium tax credit amount',
+#  'Net premium tax credit amount',
 #  'Qualified sick and family leave credit for leave taken before April 1, 2021 amount',
 #  'Credited to next year’s estimated tax amount'
  ]
@@ -454,8 +491,8 @@ model = sm.OLS(y_train, X_train)
 results2mod = model.fit()
 # Y_pred = results2mod.predict(X_test).astype(int)
 results2mod.summary()
-# model1 = LinearRegression().fit(X_train, y_train)
-# model1.score(X_train, y_train)
+model1 = LinearRegression().fit(X_train, y_train)
+model1.score(X_train, y_train)
 # model1.score(X_test, y_test)
 # results2mod.summary()
 
@@ -464,9 +501,12 @@ Y = DataFrame(y_train, columns=['Vehicle Count'])
 dataframe = concat([X, Y], axis=1)
 # dataframe
 results2mod.summary()
+# model1 = LinearRegression().fit(X_train, y_train)
+# model1.score(X_train, y_train)
+# model1.score(X_test, y_test)
 # model.coef_
 # model.intercept_
-# Y_pred = model.predict(X_test)
+# Y_pred = model1.predict(X_test)
 # plt.scatter(x=y_test, y=Y_pred)
 # plt.plot(y_test, Y_pred, color='red')    
 # sns.regplot(x=y_test, y=Y_pred)

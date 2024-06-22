@@ -17,7 +17,7 @@ getwd()
 
 ```{r}
 # Import Data, Check Descriptive Statistics & Data Types
-data_location <- here::here("starter-analysis-exercise","code","final_project","Electric_Vehicle_Population_Data.csv")
+data_location <- here::here("data","raw-data","Electric_Vehicle_Population_Data.csv")
 ev_data <- read.csv(data_location)
 summary(ev_data)
 dplyr::glimpse(ev_data)
