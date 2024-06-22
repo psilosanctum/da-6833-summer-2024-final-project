@@ -163,6 +163,9 @@ To ensure the dataset is ready for analysis, the following steps were undertaken
 
 - The dataset Electric_Vehicle_Population_Data.csv was imported.
 - Summary statistics and data types were displayed to understand the initial structure and content of the data.
+- UPDATE (6.17.2024) - Downloaded IRS tax data to join with the EV data by zip code
+  - Tax data provides many financial variables that we will include in our models (i.e. can we predict the amount of EVs per zip code based off tax data?)
+- Added a geojson file to draw zip codes on a map, will use for visualizations but still figuring out how to elegantly filter the json
 
 **2. Checking for Duplicates:**
 
@@ -252,6 +255,11 @@ These plots provide insights into the price and range variations of electric veh
 
 -Perform in-depth analysis to identify trends, patterns, or outliers.
 -Use advanced visualization techniques for deeper insights.
+
+**Statistical Model**
+- First iteration of models
+- Produced a few statistically significant tax metrics for predicting the number of EVs in a given county
+- Washington demographics datasets could further enhance our analysis
 
 **Conclusion:**
 
