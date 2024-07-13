@@ -70,22 +70,22 @@ zip_code_count
 
 The image shows two box plots of vehicle counts by ZIP code. The top plot displays the original vehicle counts, revealing most counts below 200 with many outliers up to 1000. The bottom plot uses log-transformed vehicle counts, normalizing the data and reducing the impact of outliers. Both plots highlight the distribution, central tendency, and variability of vehicle counts across ZIP codes.
 
-
+### TO DO
 ```{python}
-us_zips_df = read_csv(base_dir + 'data/raw-data/uszips.csv')
-wa_zips = us_zips_df.loc[us_zips_df['state_id'] == 'WA']
-wa_zips = wa_zips[['ZIPCODE', 'lat', 'lng', 'population']]
-merge_zips = merge(wa_zips, zip_code_count, on='ZIPCODE')
-# print(merge_zips)
-test = base_dir + 'data/raw-data/counties.geojson'
-with open(test) as f:
-    gj = geojson.load(f)
+# us_zips_df = read_csv(base_dir + 'data/raw-data/uszips.csv')
+# wa_zips = us_zips_df.loc[us_zips_df['state_id'] == 'WA']
+# wa_zips = wa_zips[['ZIPCODE', 'lat', 'lng', 'population']]
+# merge_zips = merge(wa_zips, zip_code_count, on='ZIPCODE')
+# # print(merge_zips)
+# test = base_dir + 'data/raw-data/counties.geojson'
+# with open(test) as f:
+#     gj = geojson.load(f)
     # print(gj['features'])
 # countries = ["53"]
 # new_list = []
 # features = gj['features'][0]['properties']['STATEFP']
-features = gj['features']
-print(features[0])
+# features = gj['features']
+# print(features[0])
 # for i in features:
 #     # print(i)
 #     if i['properties']['STATEFP'] == '53':
@@ -94,18 +94,18 @@ print(features[0])
 #         pass
 # final = json.dumps(new_list, indent=2)
 # print(gj)
-mapit = folium.Map(location=[122.511983, 37.77113])
+# mapit = folium.Map(location=[122.511983, 37.77113])
 
-for i in features:
-    if i['properties']['STATEFP'] == '53':
-        print(i)
-        folium.Choropleth(geo_data=i['geometry']['coordinates'][0][0],
-            data=merge_zips,
-            columns=['lat', 'lng', 'Vehicle Count'],
-            key_on='geometry.coordinates',
-            fill_color='magma',
-            line_color='magma'
-        ).add_to(mapit)
+# for i in features:
+#     if i['properties']['STATEFP'] == '53':
+#         print(i)
+#         folium.Choropleth(geo_data=i['geometry']['coordinates'][0][0],
+#             data=merge_zips,
+#             columns=['lat', 'lng', 'Vehicle Count'],
+#             key_on='geometry.coordinates',
+#             fill_color='magma',
+#             line_color='magma'
+#         ).add_to(mapit)
 # mapit.save('test.html')
 # coordinates = []
 # for zip_code in zip_code_count['ZIPCODE']:
