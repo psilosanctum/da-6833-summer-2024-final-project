@@ -6,6 +6,12 @@ execute:
   error: False
   warning: False
 ---
+**Electric Vehicle Data Analysis**
+
+# Introduction:
+
+This document is an exploratory data analysis of electric vehicle data. The data was obtained from the IRS and contains information on electric vehicles, their owners, and the tax benefits they receive. The data was cleaned and processed in R and saved as a CSV file. This document will load the data, explore it, and fit a linear regression model to predict the number of electric vehicles in a given zip code.
+
 
 # Setup
 
@@ -43,11 +49,17 @@ df.columns.tolist()
 ```
 
 Vehicle Brand Aggregation
+
 ```{python}
 sns.set_style('darkgrid')
 zip_code_count = df.groupby(['ZIPCODE']).agg({
     'Vehicle Count': 'sum',
 }).reset_index()
+```
+The figure contains two histograms showing the distribution of vehicle counts by ZIP code. The top plot displays the original distribution, with most ZIP codes having a lower vehicle count and a few having very high counts, resulting in a skewed distribution. The bottom plot shows the log-transformed distribution, which spreads out the data and makes it easier to visualize lower counts. Both plots use a horizontal bar layout for easy comparison.
+
+
+```{python}
 fig, axes = plt.subplots(2, 1, figsize=(15,15))
 sns.histplot(ax=axes[0], data=zip_code_count, y=zip_code_count['Vehicle Count'])
 log_zip_code_count = zip_code_count.copy()
@@ -55,6 +67,9 @@ log_zip_code_count['Vehicle Count'] = np.log(zip_code_count['Vehicle Count'])
 sns.histplot(ax=axes[1], data=log_zip_code_count, y=log_zip_code_count['Vehicle Count'])
 zip_code_count
 ```
+
+The image shows two box plots of vehicle counts by ZIP code. The top plot displays the original vehicle counts, revealing most counts below 200 with many outliers up to 1000. The bottom plot uses log-transformed vehicle counts, normalizing the data and reducing the impact of outliers. Both plots highlight the distribution, central tendency, and variability of vehicle counts across ZIP codes.
+
 
 ```{python}
 us_zips_df = read_csv(base_dir + 'data/raw-data/uszips.csv')
@@ -648,3 +663,7 @@ def cookdplot(model, ax=None):
 cookdplot(results2mod)
 plt.show()
 ```
+
+### Conclusion
+
+In this analysis, two models were compared: the initial linear regression model and a refined model with selected features. The refined model showed improved performance with higher R-squared and lower AIC values, indicating a better fit. The selection of features based on statistical significance helped in enhancing the model's predictive accuracy. Ultimately, the refined model is preferred for predicting the number of electric vehicles in a given zip code due to its better performance metrics and more robust feature selection process.

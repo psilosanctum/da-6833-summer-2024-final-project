@@ -53,8 +53,8 @@ The dataset obtained from Kaggle provides detailed information about Battery Ele
 
 **- (b) At this stage you are not required to already have and show the data, but if you do, even better. Then add a few lines of code which load the data and using some of the commands you learned about, provide summary descriptions of the data.**
 ```{r}
-data_location <- here::here("starter-analysis-exercise","code","final_project")
-data <- read.csv("Electric_Vehicle_Population_Data.csv")
+data_location <- here::here("data","raw-data","Electric_Vehicle_Population_Data.csv")
+data <- read.csv(data_location)
 str(data)
 head(data)
 summary(data)
