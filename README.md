@@ -1,11 +1,19 @@
 # Overview
 
-A template file and folder structure for a data analysis project/paper done with R/Quarto/Github. Other components (e.g., other programming languages) can be added as needed. 
+1) Main code file (Quarto) : /code/analysis-code/eda-ev.qmd done with R/Quarto/Github. 
+Knit the eda-ev.qmd file to get the output.
 
+2) References present in code/analysis-code/references.bib file.
+
+3) Report file: /products/manuscript/Manuscript.qmd done with R/Quarto/Github.
+Knit this file to obtain Manuscript.docx which is the final report.
+
+4) Supplemental file: /products/manuscript/supplement/Supplement.qmd done with R/Quarto/Github.
+knit this file to obtain Supplement.docx which is the final report.
 
 # Pre-requisites
 
-This is a template for a data analysis project using R, Quarto, Github and a reference manager that can handle bibtex. Our recommendation for the reference manager is Zotero, with the Better BibTex plugin/extension. It is also assumed that you have a word processor installed (e.g. MS Word or [LibreOffice](https://www.libreoffice.org/)). You need that software stack to make use of this template.
+Python with jupyter and R studio with Quarto installed.
 
 
 # Template structure and content

@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-07-12">
+<meta name="dcterms.date" content="2024-07-25">
 
 <title>EV Exploratory Data Analysis</title>
 <style>
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,7 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="eda-ev_files/libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="eda-ev_files/libs/clipboard/clipboard.min.js"></script>
 <script src="eda-ev_files/libs/quarto-html/quarto.js"></script>
 <script src="eda-ev_files/libs/quarto-html/popper.min.js"></script>
 <script src="eda-ev_files/libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="eda-ev_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="eda-ev_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
@@ -94,7 +94,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 12, 2024</p>
+      <p class="date">July 25, 2024</p>
     </div>
   </div>
   
@@ -102,7 +102,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <p><strong>Electric Vehicle Data Analysis</strong></p>
 <section id="introduction" class="level1">
@@ -111,7 +113,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="setup" class="level1">
 <h1>Setup</h1>
-<div class="cell" data-execution_count="1">
+<div id="16d0d7c9" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#load needed packages. make sure they are installed.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pandas <span class="im">import</span> read_csv, set_option, merge, DataFrame, concat, read_json</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -131,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>set_option(<span class="st">'display.max_columns'</span>, <span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Load the data.</p>
-<div class="cell" data-execution_count="2">
+<div id="1728156f" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>base_dir <span class="op">=</span> <span class="st">'../../'</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> read_csv(base_dir <span class="op">+</span> <span class="st">'data/processed-data/brand_model_year_tax_data.csv'</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>columns_list <span class="op">=</span> df.columns.tolist()</span>
@@ -351,14 +353,14 @@ Credited to next year’s estimated tax amount</code></pre>
 </div>
 </div>
 <p>Vehicle Brand Aggregation</p>
-<div class="cell" data-execution_count="3">
+<div id="878c9d48" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'darkgrid'</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>zip_code_count <span class="op">=</span> df.groupby([<span class="st">'ZIPCODE'</span>]).agg({</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Vehicle Count'</span>: <span class="st">'sum'</span>,</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>}).reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The figure contains two histograms showing the distribution of vehicle counts by ZIP code. The top plot displays the original distribution, with most ZIP codes having a lower vehicle count and a few having very high counts, resulting in a skewed distribution. The bottom plot shows the log-transformed distribution, which spreads out the data and makes it easier to visualize lower counts. Both plots use a horizontal bar layout for easy comparison.</p>
-<div class="cell" data-execution_count="4">
+<div id="5148d508" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">15</span>))</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(ax<span class="op">=</span>axes[<span class="dv">0</span>], data<span class="op">=</span>zip_code_count, y<span class="op">=</span>zip_code_count[<span class="st">'Vehicle Count'</span>])</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>log_zip_code_count <span class="op">=</span> zip_code_count.copy()</span>
@@ -369,7 +371,7 @@ Credited to next year’s estimated tax amount</code></pre>
 <div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -440,13 +442,17 @@ Credited to next year’s estimated tax amount</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-5-output-2.png" width="1191" height="1167"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-5-output-2.png" width="1192" height="1167" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>The image shows two box plots of vehicle counts by ZIP code. The top plot displays the original vehicle counts, revealing most counts below 200 with many outliers up to 1000. The bottom plot uses log-transformed vehicle counts, normalizing the data and reducing the impact of outliers. Both plots highlight the distribution, central tendency, and variability of vehicle counts across ZIP codes.</p>
 <section id="to-do" class="level3">
 <h3 class="anchored" data-anchor-id="to-do">TO DO</h3>
-<div class="cell" data-execution_count="5">
+<div id="d332b879" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># us_zips_df = read_csv(base_dir + 'data/raw-data/uszips.csv')</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># wa_zips = us_zips_df.loc[us_zips_df['state_id'] == 'WA']</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># wa_zips = wa_zips[['ZIPCODE', 'lat', 'lng', 'population']]</span></span>
@@ -491,9 +497,9 @@ Credited to next year’s estimated tax amount</code></pre>
 <span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># lng = geocode_result[0][‘geometry’][‘location’][‘lng’]</span></span>
 <span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># coordinates.append((lat, lng))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><code>betctuun fig, axes = plt.subplots(2, 1, figsize=(15,15)) sns.boxplot(ax=axes[0], data=zip_code_count, x=zip_code_count['Vehicle Count']) log_zip_code_count = zip_code_count.copy() log_zip_code_count['Vehicle Count'] = np.log(zip_code_count['Vehicle Count']) sns.boxplot(ax=axes[1], data=log_zip_code_count, x=log_zip_code_count['Vehicle Count'])</code></p>
+<p><code>nzksljkn fig, axes = plt.subplots(2, 1, figsize=(15,15)) sns.boxplot(ax=axes[0], data=zip_code_count, x=zip_code_count['Vehicle Count']) log_zip_code_count = zip_code_count.copy() log_zip_code_count['Vehicle Count'] = np.log(zip_code_count['Vehicle Count']) sns.boxplot(ax=axes[1], data=log_zip_code_count, x=log_zip_code_count['Vehicle Count'])</code></p>
 <p>MAKE AND ELECTRIC VEHICLE TYPE</p>
-<div class="cell" data-execution_count="6">
+<div id="d3d0e290" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'darkgrid'</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>make_ev_type <span class="op">=</span> df.groupby([<span class="st">'Make'</span>]).agg({</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Vehicle Count'</span>: <span class="st">'sum'</span>,</span>
@@ -503,73 +509,77 @@ Credited to next year’s estimated tax amount</code></pre>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>log_make_ev_type <span class="op">=</span> make_ev_type.copy()</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>log_make_ev_type[<span class="st">'Vehicle Count'</span>] <span class="op">=</span> np.log(make_ev_type[<span class="st">'Vehicle Count'</span>])</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>sns.histplot(ax<span class="op">=</span>axes[<span class="dv">1</span>], data<span class="op">=</span>log_make_ev_type, y<span class="op">=</span>log_make_ev_type[<span class="st">'Vehicle Count'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>&lt;Axes: xlabel='Count', ylabel='Vehicle Count'&gt;</code></pre>
-</div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-7-output-2.png" width="1199" height="1167"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-7-output-1.png" width="1199" height="1167" class="figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">15</span>))</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(ax<span class="op">=</span>axes[<span class="dv">0</span>], data<span class="op">=</span>make_ev_type)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>log_make_ev_type <span class="op">=</span> make_ev_type.copy()</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>log_make_ev_type[<span class="st">'Vehicle Count'</span>] <span class="op">=</span> np.log(make_ev_type[<span class="st">'Vehicle Count'</span>])</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>sns.boxplot(ax<span class="op">=</span>axes[<span class="dv">1</span>], data<span class="op">=</span>log_make_ev_type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>&lt;Axes: &gt;</code></pre>
 </div>
+<div id="50e263d0" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">15</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(ax<span class="op">=</span>axes[<span class="dv">0</span>], data<span class="op">=</span>make_ev_type)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>log_make_ev_type <span class="op">=</span> make_ev_type.copy()</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>log_make_ev_type[<span class="st">'Vehicle Count'</span>] <span class="op">=</span> np.log(make_ev_type[<span class="st">'Vehicle Count'</span>])</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>sns.boxplot(ax<span class="op">=</span>axes[<span class="dv">1</span>], data<span class="op">=</span>log_make_ev_type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-8-output-2.png" width="1182" height="1149"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-8-output-1.png" width="1182" height="1149" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>MAKE AND Clean Alt Fuel</p>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'darkgrid'</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>make_ev_type <span class="op">=</span> df.groupby([<span class="st">'Make'</span>, <span class="st">'Clean Alternative Fuel Vehicle (CAFV) Eligibility'</span>]).agg({</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Vehicle Count'</span>: <span class="st">'sum'</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>}).reset_index()</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">15</span>))</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>sns.histplot(ax<span class="op">=</span>axes[<span class="dv">0</span>], data<span class="op">=</span>make_ev_type, y<span class="op">=</span>make_ev_type[<span class="st">'Vehicle Count'</span>])</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>log_make_ev_type <span class="op">=</span> make_ev_type.copy()</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>log_make_ev_type[<span class="st">'Vehicle Count'</span>] <span class="op">=</span> np.log(make_ev_type[<span class="st">'Vehicle Count'</span>])</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>sns.histplot(ax<span class="op">=</span>axes[<span class="dv">1</span>], data<span class="op">=</span>log_make_ev_type, y<span class="op">=</span>log_make_ev_type[<span class="st">'Vehicle Count'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>&lt;Axes: xlabel='Count', ylabel='Vehicle Count'&gt;</code></pre>
-</div>
+<div id="1e750009" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'darkgrid'</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>make_ev_type <span class="op">=</span> df.groupby([<span class="st">'Make'</span>, <span class="st">'Clean Alternative Fuel Vehicle (CAFV) Eligibility'</span>]).agg({</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Vehicle Count'</span>: <span class="st">'sum'</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>}).reset_index()</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">15</span>))</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>sns.histplot(ax<span class="op">=</span>axes[<span class="dv">0</span>], data<span class="op">=</span>make_ev_type, y<span class="op">=</span>make_ev_type[<span class="st">'Vehicle Count'</span>])</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>log_make_ev_type <span class="op">=</span> make_ev_type.copy()</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>log_make_ev_type[<span class="st">'Vehicle Count'</span>] <span class="op">=</span> np.log(make_ev_type[<span class="st">'Vehicle Count'</span>])</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>sns.histplot(ax<span class="op">=</span>axes[<span class="dv">1</span>], data<span class="op">=</span>log_make_ev_type, y<span class="op">=</span>log_make_ev_type[<span class="st">'Vehicle Count'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-9-output-2.png" width="1199" height="1167"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-9-output-1.png" width="1199" height="1167" class="figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">15</span>))</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(ax<span class="op">=</span>axes[<span class="dv">0</span>], data<span class="op">=</span>make_ev_type, x<span class="op">=</span>make_ev_type[<span class="st">'Clean Alternative Fuel Vehicle (CAFV) Eligibility'</span>], y<span class="op">=</span>make_ev_type[<span class="st">'Vehicle Count'</span>])</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>log_make_ev_type <span class="op">=</span> make_ev_type.copy()</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>log_make_ev_type[<span class="st">'Vehicle Count'</span>] <span class="op">=</span> np.log(make_ev_type[<span class="st">'Vehicle Count'</span>])</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>sns.boxplot(ax<span class="op">=</span>axes[<span class="dv">1</span>], data<span class="op">=</span>log_make_ev_type, x<span class="op">=</span>make_ev_type[<span class="st">'Clean Alternative Fuel Vehicle (CAFV) Eligibility'</span>], y<span class="op">=</span>log_make_ev_type[<span class="st">'Vehicle Count'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>&lt;Axes: xlabel='Clean Alternative Fuel Vehicle (CAFV) Eligibility', ylabel='Vehicle Count'&gt;</code></pre>
 </div>
+<div id="d8224982" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">15</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(ax<span class="op">=</span>axes[<span class="dv">0</span>], data<span class="op">=</span>make_ev_type, x<span class="op">=</span>make_ev_type[<span class="st">'Clean Alternative Fuel Vehicle (CAFV) Eligibility'</span>], y<span class="op">=</span>make_ev_type[<span class="st">'Vehicle Count'</span>])</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>log_make_ev_type <span class="op">=</span> make_ev_type.copy()</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>log_make_ev_type[<span class="st">'Vehicle Count'</span>] <span class="op">=</span> np.log(make_ev_type[<span class="st">'Vehicle Count'</span>])</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>sns.boxplot(ax<span class="op">=</span>axes[<span class="dv">1</span>], data<span class="op">=</span>log_make_ev_type, x<span class="op">=</span>make_ev_type[<span class="st">'Clean Alternative Fuel Vehicle (CAFV) Eligibility'</span>], y<span class="op">=</span>log_make_ev_type[<span class="st">'Vehicle Count'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-10-output-2.png" width="1199" height="1167"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-10-output-1.png" width="1199" height="1167" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Mean</p>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>brand_df <span class="op">=</span> df[[</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a> <span class="st">'Residential energy tax credit amount'</span>, <span class="st">'Total income amount'</span>, <span class="st">'Vehicle Count'</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>]]</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">15</span>))</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>sns.heatmap(data<span class="op">=</span>brand_df)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>brand_df.corr()</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># brand_df['Electric Range'] = np.log(brand_df['Electric Range'])</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># sns.boxplot(ax=axes[1], data=brand_df, y=brand_df['Electric Range'])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="9cf201b3" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>brand_df <span class="op">=</span> df[[</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a> <span class="st">'Residential energy tax credit amount'</span>, <span class="st">'Total income amount'</span>, <span class="st">'Vehicle Count'</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>]]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">15</span>))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>sns.heatmap(data<span class="op">=</span>brand_df)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>brand_df.corr()</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># brand_df['Electric Range'] = np.log(brand_df['Electric Range'])</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># sns.boxplot(ax=axes[1], data=brand_df, y=brand_df['Electric Range'])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -603,46 +613,51 @@ Credited to next year’s estimated tax amount</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-11-output-2.png" width="1098" height="1163"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-11-output-2.png" width="1098" height="1163" class="figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>new_brand_df  <span class="op">=</span> df.groupby([<span class="st">'ZIPCODE'</span>]).agg({</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Total income amount'</span>: <span class="st">'sum'</span>,</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Electric Range'</span>: <span class="st">'count'</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>}).reset_index(drop<span class="op">=</span><span class="va">True</span>).rename(columns<span class="op">=</span>{</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Electric Range'</span>: <span class="st">'Vehicle Count'</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">15</span>))</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>new_brand_df[<span class="st">'Total income amount'</span>] <span class="op">=</span> new_brand_df[<span class="st">'Total income amount'</span>].astype(<span class="bu">int</span>)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>slope, intercept, r_value, p_value, std_err <span class="op">=</span> stats.linregress(new_brand_df[<span class="st">'Total income amount'</span>],new_brand_df[<span class="st">'Vehicle Count'</span>])</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>sns.regplot(ax<span class="op">=</span>axes[<span class="dv">0</span>], data<span class="op">=</span>new_brand_df, y<span class="op">=</span><span class="st">'Vehicle Count'</span>, x<span class="op">=</span><span class="st">'Total income amount'</span>, </span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    ci<span class="op">=</span><span class="va">None</span>, </span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="ss">f"y=</span><span class="sc">{</span><span class="dv">0</span><span class="sc">:.1f}</span><span class="ss">x+</span><span class="sc">{</span><span class="dv">1</span><span class="sc">:.1f}</span><span class="ch">\n</span><span class="ss">r-sq: </span><span class="sc">{</span>r_value<span class="sc">.</span><span class="bu">round</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="ss">"</span>.<span class="bu">format</span>(slope, intercept)).legend(loc<span class="op">=</span><span class="st">"best"</span>)</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>new_brand_df[<span class="st">'Vehicle Count'</span>] <span class="op">=</span> np.log(new_brand_df[<span class="st">'Vehicle Count'</span>])</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>new_brand_df[<span class="st">'Total income amount'</span>] <span class="op">=</span> np.log(new_brand_df[<span class="st">'Total income amount'</span>])</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>slope, intercept, r_value, p_value, std_err <span class="op">=</span> stats.linregress(new_brand_df[<span class="st">'Total income amount'</span>],new_brand_df[<span class="st">'Vehicle Count'</span>])</span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>sns.regplot(ax<span class="op">=</span>axes[<span class="dv">1</span>],</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>new_brand_df,</span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'Total income amount'</span>,</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'Vehicle Count'</span>, </span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    ci<span class="op">=</span><span class="va">None</span>, </span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="ss">f"y=</span><span class="sc">{</span><span class="dv">0</span><span class="sc">:.1f}</span><span class="ss">x+</span><span class="sc">{</span><span class="dv">1</span><span class="sc">:.1f}</span><span class="ch">\n</span><span class="ss">r-sq: </span><span class="sc">{</span>r_value<span class="sc">.</span><span class="bu">round</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="ss">"</span>.<span class="bu">format</span>(slope, intercept)).legend(loc<span class="op">=</span><span class="st">"best"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>&lt;matplotlib.legend.Legend at 0x13c801610&gt;</code></pre>
 </div>
+<div id="77d931f2" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>new_brand_df  <span class="op">=</span> df.groupby([<span class="st">'ZIPCODE'</span>]).agg({</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Total income amount'</span>: <span class="st">'sum'</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Electric Range'</span>: <span class="st">'count'</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>}).reset_index(drop<span class="op">=</span><span class="va">True</span>).rename(columns<span class="op">=</span>{</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Electric Range'</span>: <span class="st">'Vehicle Count'</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">15</span>))</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>new_brand_df[<span class="st">'Total income amount'</span>] <span class="op">=</span> new_brand_df[<span class="st">'Total income amount'</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>slope, intercept, r_value, p_value, std_err <span class="op">=</span> stats.linregress(new_brand_df[<span class="st">'Total income amount'</span>],new_brand_df[<span class="st">'Vehicle Count'</span>])</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>sns.regplot(ax<span class="op">=</span>axes[<span class="dv">0</span>], data<span class="op">=</span>new_brand_df, y<span class="op">=</span><span class="st">'Vehicle Count'</span>, x<span class="op">=</span><span class="st">'Total income amount'</span>, </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    ci<span class="op">=</span><span class="va">None</span>, </span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="ss">f"y=</span><span class="sc">{</span><span class="dv">0</span><span class="sc">:.1f}</span><span class="ss">x+</span><span class="sc">{</span><span class="dv">1</span><span class="sc">:.1f}</span><span class="ch">\n</span><span class="ss">r-sq: </span><span class="sc">{</span>r_value<span class="sc">.</span><span class="bu">round</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="ss">"</span>.<span class="bu">format</span>(slope, intercept)).legend(loc<span class="op">=</span><span class="st">"best"</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>new_brand_df[<span class="st">'Vehicle Count'</span>] <span class="op">=</span> np.log(new_brand_df[<span class="st">'Vehicle Count'</span>])</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>new_brand_df[<span class="st">'Total income amount'</span>] <span class="op">=</span> np.log(new_brand_df[<span class="st">'Total income amount'</span>])</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>slope, intercept, r_value, p_value, std_err <span class="op">=</span> stats.linregress(new_brand_df[<span class="st">'Total income amount'</span>],new_brand_df[<span class="st">'Vehicle Count'</span>])</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>sns.regplot(ax<span class="op">=</span>axes[<span class="dv">1</span>],</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>new_brand_df,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'Total income amount'</span>,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'Vehicle Count'</span>, </span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    ci<span class="op">=</span><span class="va">None</span>, </span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="ss">f"y=</span><span class="sc">{</span><span class="dv">0</span><span class="sc">:.1f}</span><span class="ss">x+</span><span class="sc">{</span><span class="dv">1</span><span class="sc">:.1f}</span><span class="ch">\n</span><span class="ss">r-sq: </span><span class="sc">{</span>r_value<span class="sc">.</span><span class="bu">round</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="ss">"</span>.<span class="bu">format</span>(slope, intercept)).legend(loc<span class="op">=</span><span class="st">"best"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-12-output-2.png" width="1184" height="1167"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-12-output-1.png" width="1192" height="1167" class="figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>base_dir <span class="op">=</span> <span class="st">'../../'</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> read_csv(base_dir <span class="op">+</span> <span class="st">'data/processed-data/brand_model_year_tax_data.csv'</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>columns_list <span class="op">=</span> df.columns.tolist()</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> columns_list:</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i.strip())</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># numeric_cols = columns_list[28:]</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># df.columns.tolist()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="ccae90ca" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>base_dir <span class="op">=</span> <span class="st">'../../'</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> read_csv(base_dir <span class="op">+</span> <span class="st">'data/processed-data/brand_model_year_tax_data.csv'</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>columns_list <span class="op">=</span> df.columns.tolist()</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> columns_list:</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i.strip())</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># numeric_cols = columns_list[28:]</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># df.columns.tolist()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>City
 State
@@ -750,99 +765,99 @@ Credited to next year’s estimated tax amount</code></pre>
 </div>
 </div>
 <p>ZIP CODE ONLY</p>
-<div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>amount_brand_df <span class="op">=</span> df.groupby([<span class="st">'ZIPCODE'</span>])[numeric_cols].mean(numeric_only<span class="op">=</span><span class="va">True</span>).reset_index()</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>brand_df <span class="op">=</span> df.groupby([<span class="st">'ZIPCODE'</span>]).agg({</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Vehicle Count'</span>: <span class="st">'sum'</span>,</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Electric Range'</span>: <span class="st">'mean'</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>}).reset_index()</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>merged_df <span class="op">=</span> merge(brand_df, amount_brand_df, on<span class="op">=</span>[<span class="st">'ZIPCODE'</span>])</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>merged_df <span class="op">=</span> merged_df.sort_values(<span class="st">'Vehicle Count'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>X_df <span class="op">=</span> merged_df</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>Y_df <span class="op">=</span> merged_df[[<span class="st">'Vehicle Count'</span>]]</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>Y_df <span class="op">=</span> np.log(Y_df)</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>X_df <span class="op">=</span> merged_df.drop([<span class="st">'Vehicle Count'</span>, <span class="st">'Electric Range'</span>, <span class="st">'ZIPCODE'</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array(X_df)</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> sm.add_constant(X)</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> np.array(Y_df)</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(x,Y, </span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>                                   random_state<span class="op">=</span><span class="dv">104</span>,  </span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>                                   test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>                                   shuffle<span class="op">=</span><span class="va">True</span>) </span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_train.shape)</span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_train.shape)</span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(y_train, X_train)</span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit()</span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>results.summary()</span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>p_values <span class="op">=</span> results.pvalues</span>
-<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>p_df <span class="op">=</span> DataFrame()</span>
-<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>p_df[<span class="st">'Feature'</span>] <span class="op">=</span> X_df.columns</span>
-<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>p_df[<span class="st">'p-value'</span>] <span class="op">=</span> results.pvalues[<span class="dv">1</span>:]</span>
-<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>feat_list <span class="op">=</span> []</span>
-<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>p_val_list <span class="op">=</span> []</span>
-<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, row <span class="kw">in</span> p_df.iterrows():</span>
-<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">'p-value'</span>] <span class="op">&lt;</span> <span class="fl">.05</span>:</span>
-<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a>        feat_list.append(row[<span class="st">'Feature'</span>])</span>
-<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>        p_val_list.append(row[<span class="st">'p-value'</span>])</span>
-<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
-<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a>new_p_df <span class="op">=</span> DataFrame()</span>
-<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a>new_p_df[<span class="st">'Feature'</span>] <span class="op">=</span> feat_list</span>
-<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a>new_p_df[<span class="st">'p-value'</span>] <span class="op">=</span> p_val_list</span>
-<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array(X_df[new_p_df[<span class="st">'Feature'</span>]])</span>
-<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> np.array(Y_df)</span>
-<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> sm.add_constant(X)</span>
-<span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(x,Y, </span>
-<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a>                                   random_state<span class="op">=</span><span class="dv">104</span>,  </span>
-<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a>                                   test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
-<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a>                                   shuffle<span class="op">=</span><span class="va">True</span>) </span>
-<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a>model2 <span class="op">=</span> sm.OLS(y_train, X_train)</span>
-<span id="cb21-52"><a href="#cb21-52" aria-hidden="true" tabindex="-1"></a>results2 <span class="op">=</span> model2.fit()</span>
-<span id="cb21-53"><a href="#cb21-53" aria-hidden="true" tabindex="-1"></a>results2.summary()</span>
-<span id="cb21-54"><a href="#cb21-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-55"><a href="#cb21-55" aria-hidden="true" tabindex="-1"></a>p3_values <span class="op">=</span> results2.pvalues</span>
-<span id="cb21-56"><a href="#cb21-56" aria-hidden="true" tabindex="-1"></a>new3 <span class="op">=</span> DataFrame()</span>
-<span id="cb21-57"><a href="#cb21-57" aria-hidden="true" tabindex="-1"></a>new3[<span class="st">'Feature'</span>] <span class="op">=</span> new_p_df[<span class="st">'Feature'</span>]</span>
-<span id="cb21-58"><a href="#cb21-58" aria-hidden="true" tabindex="-1"></a>new3[<span class="st">'p-value'</span>] <span class="op">=</span> p3_values[<span class="dv">1</span>:]</span>
-<span id="cb21-59"><a href="#cb21-59" aria-hidden="true" tabindex="-1"></a>new3</span>
-<span id="cb21-60"><a href="#cb21-60" aria-hidden="true" tabindex="-1"></a>feat_list3 <span class="op">=</span> []</span>
-<span id="cb21-61"><a href="#cb21-61" aria-hidden="true" tabindex="-1"></a>p_val_list3 <span class="op">=</span> []</span>
-<span id="cb21-62"><a href="#cb21-62" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, row <span class="kw">in</span> new3.iterrows():</span>
-<span id="cb21-63"><a href="#cb21-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">'p-value'</span>] <span class="op">&lt;</span> <span class="fl">.05</span>:</span>
-<span id="cb21-64"><a href="#cb21-64" aria-hidden="true" tabindex="-1"></a>        feat_list3.append(row[<span class="st">'Feature'</span>])</span>
-<span id="cb21-65"><a href="#cb21-65" aria-hidden="true" tabindex="-1"></a>        p_val_list3.append(row[<span class="st">'p-value'</span>])</span>
-<span id="cb21-66"><a href="#cb21-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb21-67"><a href="#cb21-67" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
-<span id="cb21-68"><a href="#cb21-68" aria-hidden="true" tabindex="-1"></a>final3_df <span class="op">=</span> DataFrame()</span>
-<span id="cb21-69"><a href="#cb21-69" aria-hidden="true" tabindex="-1"></a>final3_df[<span class="st">'Feature'</span>] <span class="op">=</span> feat_list3</span>
-<span id="cb21-70"><a href="#cb21-70" aria-hidden="true" tabindex="-1"></a>final3_df[<span class="st">'p-value'</span>] <span class="op">=</span> p_val_list3</span>
-<span id="cb21-71"><a href="#cb21-71" aria-hidden="true" tabindex="-1"></a>final3_df</span>
-<span id="cb21-72"><a href="#cb21-72" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array(X_df[final3_df[<span class="st">'Feature'</span>]])</span>
-<span id="cb21-73"><a href="#cb21-73" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> np.array(Y_df)</span>
-<span id="cb21-74"><a href="#cb21-74" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> sm.add_constant(X)</span>
-<span id="cb21-75"><a href="#cb21-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-76"><a href="#cb21-76" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(x,Y, </span>
-<span id="cb21-77"><a href="#cb21-77" aria-hidden="true" tabindex="-1"></a>                                   random_state<span class="op">=</span><span class="dv">104</span>,  </span>
-<span id="cb21-78"><a href="#cb21-78" aria-hidden="true" tabindex="-1"></a>                                   test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
-<span id="cb21-79"><a href="#cb21-79" aria-hidden="true" tabindex="-1"></a>                                   shuffle<span class="op">=</span><span class="va">True</span>) </span>
-<span id="cb21-80"><a href="#cb21-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-81"><a href="#cb21-81" aria-hidden="true" tabindex="-1"></a>model3 <span class="op">=</span> sm.OLS(y_train, X_train)</span>
-<span id="cb21-82"><a href="#cb21-82" aria-hidden="true" tabindex="-1"></a>results3 <span class="op">=</span> model3.fit()</span>
-<span id="cb21-83"><a href="#cb21-83" aria-hidden="true" tabindex="-1"></a>Y_pred <span class="op">=</span> results3.predict(X_train).astype(<span class="bu">int</span>)</span>
-<span id="cb21-84"><a href="#cb21-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-85"><a href="#cb21-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-86"><a href="#cb21-86" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [<span class="st">'constant'</span>] <span class="op">+</span> final3_df[<span class="st">'Feature'</span>].tolist()</span>
-<span id="cb21-87"><a href="#cb21-87" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> DataFrame(X_train, columns<span class="op">=</span>features)</span>
-<span id="cb21-88"><a href="#cb21-88" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> DataFrame(y_train, columns<span class="op">=</span>[<span class="st">'Vehicle Count'</span>])</span>
-<span id="cb21-89"><a href="#cb21-89" aria-hidden="true" tabindex="-1"></a>dataframe <span class="op">=</span> concat([X, Y], axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb21-90"><a href="#cb21-90" aria-hidden="true" tabindex="-1"></a>dataframe</span>
-<span id="cb21-91"><a href="#cb21-91" aria-hidden="true" tabindex="-1"></a>results3.summary()</span>
-<span id="cb21-92"><a href="#cb21-92" aria-hidden="true" tabindex="-1"></a>features</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="e122300e" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>amount_brand_df <span class="op">=</span> df.groupby([<span class="st">'ZIPCODE'</span>])[numeric_cols].mean(numeric_only<span class="op">=</span><span class="va">True</span>).reset_index()</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>brand_df <span class="op">=</span> df.groupby([<span class="st">'ZIPCODE'</span>]).agg({</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Vehicle Count'</span>: <span class="st">'sum'</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Electric Range'</span>: <span class="st">'mean'</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>}).reset_index()</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>merged_df <span class="op">=</span> merge(brand_df, amount_brand_df, on<span class="op">=</span>[<span class="st">'ZIPCODE'</span>])</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>merged_df <span class="op">=</span> merged_df.sort_values(<span class="st">'Vehicle Count'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>X_df <span class="op">=</span> merged_df</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>Y_df <span class="op">=</span> merged_df[[<span class="st">'Vehicle Count'</span>]]</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>Y_df <span class="op">=</span> np.log(Y_df)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>X_df <span class="op">=</span> merged_df.drop([<span class="st">'Vehicle Count'</span>, <span class="st">'Electric Range'</span>, <span class="st">'ZIPCODE'</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array(X_df)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> sm.add_constant(X)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> np.array(Y_df)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(x,Y, </span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>                                   random_state<span class="op">=</span><span class="dv">104</span>,  </span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>                                   test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>                                   shuffle<span class="op">=</span><span class="va">True</span>) </span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_train.shape)</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_train.shape)</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(y_train, X_train)</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit()</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>results.summary()</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>p_values <span class="op">=</span> results.pvalues</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>p_df <span class="op">=</span> DataFrame()</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>p_df[<span class="st">'Feature'</span>] <span class="op">=</span> X_df.columns</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>p_df[<span class="st">'p-value'</span>] <span class="op">=</span> results.pvalues[<span class="dv">1</span>:]</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>feat_list <span class="op">=</span> []</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>p_val_list <span class="op">=</span> []</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, row <span class="kw">in</span> p_df.iterrows():</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">'p-value'</span>] <span class="op">&lt;</span> <span class="fl">.05</span>:</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>        feat_list.append(row[<span class="st">'Feature'</span>])</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>        p_val_list.append(row[<span class="st">'p-value'</span>])</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>new_p_df <span class="op">=</span> DataFrame()</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>new_p_df[<span class="st">'Feature'</span>] <span class="op">=</span> feat_list</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>new_p_df[<span class="st">'p-value'</span>] <span class="op">=</span> p_val_list</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array(X_df[new_p_df[<span class="st">'Feature'</span>]])</span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> np.array(Y_df)</span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> sm.add_constant(X)</span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(x,Y, </span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>                                   random_state<span class="op">=</span><span class="dv">104</span>,  </span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>                                   test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>                                   shuffle<span class="op">=</span><span class="va">True</span>) </span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>model2 <span class="op">=</span> sm.OLS(y_train, X_train)</span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>results2 <span class="op">=</span> model2.fit()</span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>results2.summary()</span>
+<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a>p3_values <span class="op">=</span> results2.pvalues</span>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>new3 <span class="op">=</span> DataFrame()</span>
+<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a>new3[<span class="st">'Feature'</span>] <span class="op">=</span> new_p_df[<span class="st">'Feature'</span>]</span>
+<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a>new3[<span class="st">'p-value'</span>] <span class="op">=</span> p3_values[<span class="dv">1</span>:]</span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a>new3</span>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a>feat_list3 <span class="op">=</span> []</span>
+<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a>p_val_list3 <span class="op">=</span> []</span>
+<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, row <span class="kw">in</span> new3.iterrows():</span>
+<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">'p-value'</span>] <span class="op">&lt;</span> <span class="fl">.05</span>:</span>
+<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a>        feat_list3.append(row[<span class="st">'Feature'</span>])</span>
+<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a>        p_val_list3.append(row[<span class="st">'p-value'</span>])</span>
+<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
+<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a>final3_df <span class="op">=</span> DataFrame()</span>
+<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a>final3_df[<span class="st">'Feature'</span>] <span class="op">=</span> feat_list3</span>
+<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a>final3_df[<span class="st">'p-value'</span>] <span class="op">=</span> p_val_list3</span>
+<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a>final3_df</span>
+<span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array(X_df[final3_df[<span class="st">'Feature'</span>]])</span>
+<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> np.array(Y_df)</span>
+<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> sm.add_constant(X)</span>
+<span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(x,Y, </span>
+<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a>                                   random_state<span class="op">=</span><span class="dv">104</span>,  </span>
+<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a>                                   test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a>                                   shuffle<span class="op">=</span><span class="va">True</span>) </span>
+<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a>model3 <span class="op">=</span> sm.OLS(y_train, X_train)</span>
+<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a>results3 <span class="op">=</span> model3.fit()</span>
+<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a>Y_pred <span class="op">=</span> results3.predict(X_train).astype(<span class="bu">int</span>)</span>
+<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [<span class="st">'constant'</span>] <span class="op">+</span> final3_df[<span class="st">'Feature'</span>].tolist()</span>
+<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> DataFrame(X_train, columns<span class="op">=</span>features)</span>
+<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> DataFrame(y_train, columns<span class="op">=</span>[<span class="st">'Vehicle Count'</span>])</span>
+<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a>dataframe <span class="op">=</span> concat([X, Y], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a>dataframe</span>
+<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a>results3.summary()</span>
+<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a>features</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(368, 76)
 (368, 1)</code></pre>
@@ -862,49 +877,49 @@ Credited to next year’s estimated tax amount</code></pre>
  'Child and dependent care credit amount']</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model values</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>model_fitted_y <span class="op">=</span> results3.fittedvalues</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># model residuals</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>model_residuals <span class="op">=</span> results3.resid</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># normalized residuals</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>model_norm_residuals <span class="op">=</span> results3.get_influence().resid_studentized_internal</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co"># absolute squared normalized residuals</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>model_norm_residuals_abs_sqrt <span class="op">=</span> np.sqrt(np.<span class="bu">abs</span>(model_norm_residuals))</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co"># absolute residuals</span></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>model_abs_resid <span class="op">=</span> np.<span class="bu">abs</span>(model_residuals)</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co"># leverage, from statsmodels internals</span></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>model_leverage <span class="op">=</span> results3.get_influence().hat_matrix_diag</span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="co"># cook's distance, from statsmodels internals</span></span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>model_cooks <span class="op">=</span> results3.get_influence().cooks_distance[<span class="dv">0</span>]</span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>plot_lm_1 <span class="op">=</span> plt.figure()</span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>] <span class="op">=</span> sns.residplot(x<span class="op">=</span>model_fitted_y, y<span class="op">=</span>dataframe.columns[<span class="op">-</span><span class="dv">1</span>], data<span class="op">=</span>dataframe,</span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>                          lowess<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>                          scatter_kws<span class="op">=</span>{<span class="st">'alpha'</span>: <span class="fl">0.5</span>},</span>
-<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>                          line_kws<span class="op">=</span>{<span class="st">'color'</span>: <span class="st">'red'</span>, <span class="st">'lw'</span>: <span class="dv">1</span>, <span class="st">'alpha'</span>: <span class="fl">0.8</span>})</span>
-<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>].set_title(<span class="st">'Residuals vs Fitted'</span>)</span>
-<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Fitted values'</span>)</span>
-<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Residuals'</span>)</span>
-<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> DataFrame()</span>
-<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'res'</span>] <span class="op">=</span> model_residuals</span>
-<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'fitted'</span>] <span class="op">=</span> model_fitted_y</span>
-<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'count'</span>] <span class="op">=</span> dataframe[<span class="st">'Vehicle Count'</span>]</span>
-<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a><span class="co"># df['ZIPCODE'] = dataframe['ZIPCODE']</span></span>
-<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>maxr <span class="op">=</span> np.<span class="bu">max</span>(model_residuals)</span>
-<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>df.sort_values(<span class="st">'fitted'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="140e9b30" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model values</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>model_fitted_y <span class="op">=</span> results3.fittedvalues</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># model residuals</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>model_residuals <span class="op">=</span> results3.resid</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># normalized residuals</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>model_norm_residuals <span class="op">=</span> results3.get_influence().resid_studentized_internal</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co"># absolute squared normalized residuals</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>model_norm_residuals_abs_sqrt <span class="op">=</span> np.sqrt(np.<span class="bu">abs</span>(model_norm_residuals))</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co"># absolute residuals</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>model_abs_resid <span class="op">=</span> np.<span class="bu">abs</span>(model_residuals)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co"># leverage, from statsmodels internals</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>model_leverage <span class="op">=</span> results3.get_influence().hat_matrix_diag</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co"># cook's distance, from statsmodels internals</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>model_cooks <span class="op">=</span> results3.get_influence().cooks_distance[<span class="dv">0</span>]</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>plot_lm_1 <span class="op">=</span> plt.figure()</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>] <span class="op">=</span> sns.residplot(x<span class="op">=</span>model_fitted_y, y<span class="op">=</span>dataframe.columns[<span class="op">-</span><span class="dv">1</span>], data<span class="op">=</span>dataframe,</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>                          lowess<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>                          scatter_kws<span class="op">=</span>{<span class="st">'alpha'</span>: <span class="fl">0.5</span>},</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>                          line_kws<span class="op">=</span>{<span class="st">'color'</span>: <span class="st">'red'</span>, <span class="st">'lw'</span>: <span class="dv">1</span>, <span class="st">'alpha'</span>: <span class="fl">0.8</span>})</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>].set_title(<span class="st">'Residuals vs Fitted'</span>)</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Fitted values'</span>)</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Residuals'</span>)</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> DataFrame()</span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'res'</span>] <span class="op">=</span> model_residuals</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'fitted'</span>] <span class="op">=</span> model_fitted_y</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'count'</span>] <span class="op">=</span> dataframe[<span class="st">'Vehicle Count'</span>]</span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a><span class="co"># df['ZIPCODE'] = dataframe['ZIPCODE']</span></span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>maxr <span class="op">=</span> np.<span class="bu">max</span>(model_residuals)</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>df.sort_values(<span class="st">'fitted'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -916,32 +931,32 @@ Credited to next year’s estimated tax amount</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">92</td>
-<td>-1.574220</td>
-<td>8.568153</td>
+<td>-1.574213</td>
+<td>8.568146</td>
 <td>6.993933</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">317</td>
-<td>-1.506110</td>
-<td>8.143368</td>
+<td>-1.506098</td>
+<td>8.143356</td>
 <td>6.637258</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">142</td>
-<td>-0.758350</td>
-<td>8.025177</td>
+<td>-0.758312</td>
+<td>8.025139</td>
 <td>7.266827</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">104</td>
-<td>-1.119208</td>
-<td>7.939224</td>
+<td>-1.119170</td>
+<td>7.939186</td>
 <td>6.820016</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">359</td>
-<td>-1.153209</td>
-<td>7.925144</td>
+<td>-1.153193</td>
+<td>7.925129</td>
 <td>6.771936</td>
 </tr>
 <tr class="even">
@@ -952,32 +967,32 @@ Credited to next year’s estimated tax amount</code></pre>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">282</td>
-<td>-0.470297</td>
-<td>0.470297</td>
+<td>-0.470298</td>
+<td>0.470298</td>
 <td>0.000000</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">315</td>
-<td>0.920935</td>
-<td>0.465360</td>
+<td>0.920933</td>
+<td>0.465362</td>
 <td>1.386294</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">255</td>
-<td>-0.280249</td>
-<td>0.280249</td>
+<td>-0.280251</td>
+<td>0.280251</td>
 <td>0.000000</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">149</td>
-<td>0.745540</td>
-<td>-0.052393</td>
+<td>0.745538</td>
+<td>-0.052391</td>
 <td>0.693147</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">253</td>
-<td>1.227998</td>
-<td>-0.129386</td>
+<td>1.227997</td>
+<td>-0.129385</td>
 <td>1.098612</td>
 </tr>
 </tbody>
@@ -987,194 +1002,214 @@ Credited to next year’s estimated tax amount</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-15-output-2.png" width="582" height="447"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-15-output-2.png" width="582" height="447" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <section id="normal-q-q-plot" class="level4">
 <h4 class="anchored" data-anchor-id="normal-q-q-plot">Normal Q-Q Plot</h4>
 <p>This plot shows if the residuals are normally distributed. A good normal QQ plot has all of the residuals lying on or close to the red line.</p>
-<div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>QQ <span class="op">=</span> ProbPlot(model_norm_residuals)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>plot_lm_2 <span class="op">=</span> QQ.qqplot(line<span class="op">=</span><span class="st">'45'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, color<span class="op">=</span><span class="st">'#4C72B0'</span>, lw<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>plot_lm_2.axes[<span class="dv">0</span>].set_title(<span class="st">'Normal Q-Q'</span>)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>plot_lm_2.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Theoretical Quantiles'</span>)</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>plot_lm_2.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Standardized Residuals'</span>)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># annotations</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>abs_norm_resid <span class="op">=</span> np.flip(np.argsort(np.<span class="bu">abs</span>(model_norm_residuals)), <span class="dv">0</span>)</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>abs_norm_resid_top_3 <span class="op">=</span> abs_norm_resid[:<span class="dv">3</span>]</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r, i <span class="kw">in</span> <span class="bu">enumerate</span>(abs_norm_resid_top_3):</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    plot_lm_2.axes[<span class="dv">0</span>].annotate(i,</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>                               xy<span class="op">=</span>(np.flip(QQ.theoretical_quantiles, <span class="dv">0</span>)[r],</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>                                   model_norm_residuals[i]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="bed71d96" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>QQ <span class="op">=</span> ProbPlot(model_norm_residuals)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>plot_lm_2 <span class="op">=</span> QQ.qqplot(line<span class="op">=</span><span class="st">'45'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, color<span class="op">=</span><span class="st">'#4C72B0'</span>, lw<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>plot_lm_2.axes[<span class="dv">0</span>].set_title(<span class="st">'Normal Q-Q'</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>plot_lm_2.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Theoretical Quantiles'</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>plot_lm_2.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Standardized Residuals'</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># annotations</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>abs_norm_resid <span class="op">=</span> np.flip(np.argsort(np.<span class="bu">abs</span>(model_norm_residuals)), <span class="dv">0</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>abs_norm_resid_top_3 <span class="op">=</span> abs_norm_resid[:<span class="dv">3</span>]</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r, i <span class="kw">in</span> <span class="bu">enumerate</span>(abs_norm_resid_top_3):</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    plot_lm_2.axes[<span class="dv">0</span>].annotate(i,</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>                               xy<span class="op">=</span>(np.flip(QQ.theoretical_quantiles, <span class="dv">0</span>)[r],</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>                                   model_norm_residuals[i]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-16-output-1.png" width="582" height="447"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-16-output-1.png" width="582" height="447" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="scale-location" class="level4">
 <h4 class="anchored" data-anchor-id="scale-location">Scale-Location</h4>
 <p>This plot is a way to check if the residuals suffer from non-constant variance, aka heteroscedasticity.</p>
-<div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>plot_lm_3 <span class="op">=</span> plt.figure()</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(model_fitted_y, model_norm_residuals_abs_sqrt, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>sns.regplot(</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>model_fitted_y, </span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>model_norm_residuals_abs_sqrt,</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    scatter<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    ci<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    lowess<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    line_kws<span class="op">=</span>{<span class="st">'color'</span>: <span class="st">'red'</span>, <span class="st">'lw'</span>: <span class="dv">1</span>, <span class="st">'alpha'</span>: <span class="fl">0.8</span>})</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>plot_lm_3.axes[<span class="dv">0</span>].set_title(<span class="st">'Scale-Location'</span>)</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>plot_lm_3.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Fitted values'</span>)</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>plot_lm_3.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'$\sqrt{|Standardized Residuals|}$'</span>)</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="co"># annotations</span></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>abs_sq_norm_resid <span class="op">=</span> np.flip(np.argsort(model_norm_residuals_abs_sqrt), <span class="dv">0</span>)</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>abs_sq_norm_resid_top_3 <span class="op">=</span> abs_sq_norm_resid[:<span class="dv">3</span>]</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r, i <span class="kw">in</span> <span class="bu">enumerate</span>(abs_sq_norm_resid_top_3):</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    plot_lm_3.axes[<span class="dv">0</span>].annotate(</span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>        i,</span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>        xy<span class="op">=</span>(model_fitted_y[i],</span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>        model_norm_residuals_abs_sqrt[i]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="1d3b07ea" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plot_lm_3 <span class="op">=</span> plt.figure()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(model_fitted_y, model_norm_residuals_abs_sqrt, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>sns.regplot(</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>model_fitted_y, </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>model_norm_residuals_abs_sqrt,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    scatter<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    ci<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    lowess<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    line_kws<span class="op">=</span>{<span class="st">'color'</span>: <span class="st">'red'</span>, <span class="st">'lw'</span>: <span class="dv">1</span>, <span class="st">'alpha'</span>: <span class="fl">0.8</span>})</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>plot_lm_3.axes[<span class="dv">0</span>].set_title(<span class="st">'Scale-Location'</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>plot_lm_3.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Fitted values'</span>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>plot_lm_3.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'$\sqrt{|Standardized Residuals|}$'</span>)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co"># annotations</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>abs_sq_norm_resid <span class="op">=</span> np.flip(np.argsort(model_norm_residuals_abs_sqrt), <span class="dv">0</span>)</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>abs_sq_norm_resid_top_3 <span class="op">=</span> abs_sq_norm_resid[:<span class="dv">3</span>]</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r, i <span class="kw">in</span> <span class="bu">enumerate</span>(abs_sq_norm_resid_top_3):</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    plot_lm_3.axes[<span class="dv">0</span>].annotate(</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>        i,</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>        xy<span class="op">=</span>(model_fitted_y[i],</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>        model_norm_residuals_abs_sqrt[i]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-17-output-1.png" width="594" height="447"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-17-output-1.png" width="594" height="447" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="residuals-vs.-leverage" class="level4">
 <h4 class="anchored" data-anchor-id="residuals-vs.-leverage">Residuals vs.&nbsp;Leverage</h4>
 <p>Unlike outliers, which have an unusually large y value, leverage points have extreme x values. This may not seem so bad at face value, but it can have damaging effects on the model because the β coefficients are very sensitive to leverage points. The purpose of the Residuals vs Leverage plot is to identify these problematic observations.</p>
-<div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>plot_lm_4 <span class="op">=</span> plt.figure()</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(model_leverage, model_norm_residuals, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>sns.regplot(x<span class="op">=</span>model_leverage, y<span class="op">=</span>model_norm_residuals,</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>            scatter<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>            ci<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>            lowess<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>            line_kws<span class="op">=</span>{<span class="st">'color'</span>: <span class="st">'red'</span>, <span class="st">'lw'</span>: <span class="dv">1</span>, <span class="st">'alpha'</span>: <span class="fl">0.8</span>})</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_xlim(<span class="dv">0</span>, np.<span class="bu">max</span>(model_leverage)<span class="op">+</span><span class="fl">0.01</span>)</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_ylim(<span class="op">-</span><span class="dv">3</span>, <span class="dv">5</span>)</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_title(<span class="st">'Residuals vs Leverage'</span>)</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Leverage'</span>)</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Standardized Residuals'</span>)</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="co"># annotations</span></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>leverage_top_3 <span class="op">=</span> np.flip(np.argsort(model_cooks), <span class="dv">0</span>)[:<span class="dv">3</span>]</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> leverage_top_3:</span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    plot_lm_4.axes[<span class="dv">0</span>].annotate(i,</span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>                                xy<span class="op">=</span>(model_leverage[i],</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>                                    model_norm_residuals[i]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="27e620f0" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plot_lm_4 <span class="op">=</span> plt.figure()</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(model_leverage, model_norm_residuals, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>sns.regplot(x<span class="op">=</span>model_leverage, y<span class="op">=</span>model_norm_residuals,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>            scatter<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>            ci<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>            lowess<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>            line_kws<span class="op">=</span>{<span class="st">'color'</span>: <span class="st">'red'</span>, <span class="st">'lw'</span>: <span class="dv">1</span>, <span class="st">'alpha'</span>: <span class="fl">0.8</span>})</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_xlim(<span class="dv">0</span>, np.<span class="bu">max</span>(model_leverage)<span class="op">+</span><span class="fl">0.01</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_ylim(<span class="op">-</span><span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_title(<span class="st">'Residuals vs Leverage'</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Leverage'</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Standardized Residuals'</span>)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co"># annotations</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>leverage_top_3 <span class="op">=</span> np.flip(np.argsort(model_cooks), <span class="dv">0</span>)[:<span class="dv">3</span>]</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> leverage_top_3:</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    plot_lm_4.axes[<span class="dv">0</span>].annotate(i,</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>                                xy<span class="op">=</span>(model_leverage[i],</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>                                    model_norm_residuals[i]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-18-output-1.png" width="594" height="447"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-18-output-1.png" width="594" height="447" class="figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cookdplot(model, ax<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ax <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    cooks_d <span class="op">=</span> model.get_influence().cooks_distance[<span class="dv">0</span>]</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    ax.vlines(<span class="bu">range</span>(<span class="bu">len</span>(cooks_d)),<span class="dv">0</span>,cooks_d)</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># annotations</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    cookd_top_3 <span class="op">=</span> np.flip(np.argsort(cooks_d), <span class="dv">0</span>)[:<span class="dv">3</span>]</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> cookd_top_3:</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>        ax.annotate(i, xy<span class="op">=</span>(i, cooks_d[i]),color <span class="op">=</span> <span class="st">'C3'</span>)</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="st">"Cook's Distance"</span> , fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Obs. Number'</span>)</span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Cook's distance"</span>)</span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ax</span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>cookdplot(results3)</span>
-<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="5c380fa8" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cookdplot(model, ax<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ax <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>        fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    cooks_d <span class="op">=</span> model.get_influence().cooks_distance[<span class="dv">0</span>]</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    ax.vlines(<span class="bu">range</span>(<span class="bu">len</span>(cooks_d)),<span class="dv">0</span>,cooks_d)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># annotations</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    cookd_top_3 <span class="op">=</span> np.flip(np.argsort(cooks_d), <span class="dv">0</span>)[:<span class="dv">3</span>]</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> cookd_top_3:</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>        ax.annotate(i, xy<span class="op">=</span>(i, cooks_d[i]),color <span class="op">=</span> <span class="st">'C3'</span>)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="st">"Cook's Distance"</span> , fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Obs. Number'</span>)</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Cook's distance"</span>)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ax</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>cookdplot(results3)</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-19-output-1.png" width="593" height="447"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-19-output-1.png" width="593" height="447" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 </section>
 <section id="second-model" class="level3">
 <h3 class="anchored" data-anchor-id="second-model">SECOND MODEL</h3>
-<div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># merged_df = merged_df.loc[(merged_df['Vehicle Count'] != 1.94591)]</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># print(merged_df.loc[merged_df['Vehicle Count'] &lt; 5].sort_values('Vehicle Count', ascending=False).head(30))</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>X_df <span class="op">=</span> merged_df.copy()</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>Y_df <span class="op">=</span> merged_df[[<span class="st">'Vehicle Count'</span>]]</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>Y_df <span class="op">=</span> np.log(Y_df)</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>X_features <span class="op">=</span> [</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Adjust gross income (AGI) [8]',</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Total income amount',</span></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a> <span class="st">'State and local income tax refunds amount'</span>,</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Taxable pensions and annuities amount',</span></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a> <span class="st">'Number of farm returns'</span>,</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a> <span class="st">'Total statutory adjustments amount'</span>,</span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a> <span class="st">'Self-employed (Keogh) retirement plans amount'</span>,</span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a> <span class="st">'Total standard deduction amount'</span>,</span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Basic standard deduction amount',</span></span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Additional standard deduction amount',</span></span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Total medical and dental expense deduction amount',</span></span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a> <span class="st">'Limited state and local taxes'</span>,</span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a> <span class="st">'Home mortgage from personal seller amount'</span>,</span>
-<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a> <span class="st">'Alternative minimum tax amount'</span>,</span>
-<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a> <span class="st">'Child and dependent care credit amount'</span>,</span>
-<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Net premium tax credit amount',</span></span>
-<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Qualified sick and family leave credit for leave taken before April 1, 2021 amount',</span></span>
-<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Credited to next year’s estimated tax amount'</span></span>
-<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a> ]</span>
-<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>X_df <span class="op">=</span> X_df[X_features]</span>
-<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>feat_list <span class="op">=</span> []</span>
-<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>log_list <span class="op">=</span> []</span>
-<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> feat <span class="kw">in</span> X_features:</span>
-<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>    feat_list.append(feat)</span>
-<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>    log_list.append(np.log(X_df[feat]))</span>
-<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a><span class="co"># X_features = ['ZIPCODE',</span></span>
-<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Adjust gross income (AGI) [8]',</span></span>
-<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Total income amount',</span></span>
-<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Total statutory adjustments amount',</span></span>
-<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Home mortgage from personal seller amount',</span></span>
-<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Alternative minimum tax amount']</span></span>
-<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X_df[X_features]</span>
-<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> Y_df</span>
-<span id="cb29-46"><a href="#cb29-46" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> sm.add_constant(X)</span>
-<span id="cb29-47"><a href="#cb29-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(x,Y, </span>
-<span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a>                                   random_state<span class="op">=</span><span class="dv">104</span>,  </span>
-<span id="cb29-50"><a href="#cb29-50" aria-hidden="true" tabindex="-1"></a>                                   test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
-<span id="cb29-51"><a href="#cb29-51" aria-hidden="true" tabindex="-1"></a>                                   shuffle<span class="op">=</span><span class="va">True</span>) </span>
-<span id="cb29-52"><a href="#cb29-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-53"><a href="#cb29-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_train)</span>
-<span id="cb29-54"><a href="#cb29-54" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(y_train, X_train)</span>
-<span id="cb29-55"><a href="#cb29-55" aria-hidden="true" tabindex="-1"></a>results2mod <span class="op">=</span> model.fit()</span>
-<span id="cb29-56"><a href="#cb29-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Y_pred = results2mod.predict(X_test).astype(int)</span></span>
-<span id="cb29-57"><a href="#cb29-57" aria-hidden="true" tabindex="-1"></a>results2mod.summary()</span>
-<span id="cb29-58"><a href="#cb29-58" aria-hidden="true" tabindex="-1"></a>model1 <span class="op">=</span> LinearRegression().fit(X_train, y_train)</span>
-<span id="cb29-59"><a href="#cb29-59" aria-hidden="true" tabindex="-1"></a>model1.score(X_train, y_train)</span>
-<span id="cb29-60"><a href="#cb29-60" aria-hidden="true" tabindex="-1"></a><span class="co"># model1.score(X_test, y_test)</span></span>
-<span id="cb29-61"><a href="#cb29-61" aria-hidden="true" tabindex="-1"></a><span class="co"># results2mod.summary()</span></span>
-<span id="cb29-62"><a href="#cb29-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-63"><a href="#cb29-63" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> DataFrame(X_train, columns<span class="op">=</span>[<span class="st">'constant'</span>] <span class="op">+</span> X_features)</span>
-<span id="cb29-64"><a href="#cb29-64" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> DataFrame(y_train, columns<span class="op">=</span>[<span class="st">'Vehicle Count'</span>])</span>
-<span id="cb29-65"><a href="#cb29-65" aria-hidden="true" tabindex="-1"></a>dataframe <span class="op">=</span> concat([X, Y], axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb29-66"><a href="#cb29-66" aria-hidden="true" tabindex="-1"></a><span class="co"># dataframe</span></span>
-<span id="cb29-67"><a href="#cb29-67" aria-hidden="true" tabindex="-1"></a>results2mod.summary()</span>
-<span id="cb29-68"><a href="#cb29-68" aria-hidden="true" tabindex="-1"></a><span class="co"># model1 = LinearRegression().fit(X_train, y_train)</span></span>
-<span id="cb29-69"><a href="#cb29-69" aria-hidden="true" tabindex="-1"></a><span class="co"># model1.score(X_train, y_train)</span></span>
-<span id="cb29-70"><a href="#cb29-70" aria-hidden="true" tabindex="-1"></a><span class="co"># model1.score(X_test, y_test)</span></span>
-<span id="cb29-71"><a href="#cb29-71" aria-hidden="true" tabindex="-1"></a><span class="co"># model.coef_</span></span>
-<span id="cb29-72"><a href="#cb29-72" aria-hidden="true" tabindex="-1"></a><span class="co"># model.intercept_</span></span>
-<span id="cb29-73"><a href="#cb29-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Y_pred = model1.predict(X_test)</span></span>
-<span id="cb29-74"><a href="#cb29-74" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.scatter(x=y_test, y=Y_pred)</span></span>
-<span id="cb29-75"><a href="#cb29-75" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.plot(y_test, Y_pred, color='red')    </span></span>
-<span id="cb29-76"><a href="#cb29-76" aria-hidden="true" tabindex="-1"></a><span class="co"># sns.regplot(x=y_test, y=Y_pred)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="af2d576c" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># merged_df = merged_df.loc[(merged_df['Vehicle Count'] != 1.94591)]</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># print(merged_df.loc[merged_df['Vehicle Count'] &lt; 5].sort_values('Vehicle Count', ascending=False).head(30))</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>X_df <span class="op">=</span> merged_df.copy()</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>Y_df <span class="op">=</span> merged_df[[<span class="st">'Vehicle Count'</span>]]</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>Y_df <span class="op">=</span> np.log(Y_df)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>X_features <span class="op">=</span> [</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Adjust gross income (AGI) [8]',</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Total income amount',</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a> <span class="st">'State and local income tax refunds amount'</span>,</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Taxable pensions and annuities amount',</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a> <span class="st">'Number of farm returns'</span>,</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a> <span class="st">'Total statutory adjustments amount'</span>,</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a> <span class="st">'Self-employed (Keogh) retirement plans amount'</span>,</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a> <span class="st">'Total standard deduction amount'</span>,</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Basic standard deduction amount',</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Additional standard deduction amount',</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Total medical and dental expense deduction amount',</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a> <span class="st">'Limited state and local taxes'</span>,</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a> <span class="st">'Home mortgage from personal seller amount'</span>,</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a> <span class="st">'Alternative minimum tax amount'</span>,</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a> <span class="st">'Child and dependent care credit amount'</span>,</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Net premium tax credit amount',</span></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Qualified sick and family leave credit for leave taken before April 1, 2021 amount',</span></span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Credited to next year’s estimated tax amount'</span></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a> ]</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>X_df <span class="op">=</span> X_df[X_features]</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>feat_list <span class="op">=</span> []</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>log_list <span class="op">=</span> []</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> feat <span class="kw">in</span> X_features:</span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>    feat_list.append(feat)</span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>    log_list.append(np.log(X_df[feat]))</span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a><span class="co"># X_features = ['ZIPCODE',</span></span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Adjust gross income (AGI) [8]',</span></span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Total income amount',</span></span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Total statutory adjustments amount',</span></span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Home mortgage from personal seller amount',</span></span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a><span class="co">#  'Alternative minimum tax amount']</span></span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X_df[X_features]</span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> Y_df</span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> sm.add_constant(X)</span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(x,Y, </span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a>                                   random_state<span class="op">=</span><span class="dv">104</span>,  </span>
+<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a>                                   test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a>                                   shuffle<span class="op">=</span><span class="va">True</span>) </span>
+<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-53"><a href="#cb24-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_train)</span>
+<span id="cb24-54"><a href="#cb24-54" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(y_train, X_train)</span>
+<span id="cb24-55"><a href="#cb24-55" aria-hidden="true" tabindex="-1"></a>results2mod <span class="op">=</span> model.fit()</span>
+<span id="cb24-56"><a href="#cb24-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Y_pred = results2mod.predict(X_test).astype(int)</span></span>
+<span id="cb24-57"><a href="#cb24-57" aria-hidden="true" tabindex="-1"></a>results2mod.summary()</span>
+<span id="cb24-58"><a href="#cb24-58" aria-hidden="true" tabindex="-1"></a>model1 <span class="op">=</span> LinearRegression().fit(X_train, y_train)</span>
+<span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a>model1.score(X_train, y_train)</span>
+<span id="cb24-60"><a href="#cb24-60" aria-hidden="true" tabindex="-1"></a><span class="co"># model1.score(X_test, y_test)</span></span>
+<span id="cb24-61"><a href="#cb24-61" aria-hidden="true" tabindex="-1"></a><span class="co"># results2mod.summary()</span></span>
+<span id="cb24-62"><a href="#cb24-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-63"><a href="#cb24-63" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> DataFrame(X_train, columns<span class="op">=</span>[<span class="st">'constant'</span>] <span class="op">+</span> X_features)</span>
+<span id="cb24-64"><a href="#cb24-64" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> DataFrame(y_train, columns<span class="op">=</span>[<span class="st">'Vehicle Count'</span>])</span>
+<span id="cb24-65"><a href="#cb24-65" aria-hidden="true" tabindex="-1"></a>dataframe <span class="op">=</span> concat([X, Y], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb24-66"><a href="#cb24-66" aria-hidden="true" tabindex="-1"></a><span class="co"># dataframe</span></span>
+<span id="cb24-67"><a href="#cb24-67" aria-hidden="true" tabindex="-1"></a>results2mod.summary()</span>
+<span id="cb24-68"><a href="#cb24-68" aria-hidden="true" tabindex="-1"></a><span class="co"># model1 = LinearRegression().fit(X_train, y_train)</span></span>
+<span id="cb24-69"><a href="#cb24-69" aria-hidden="true" tabindex="-1"></a><span class="co"># model1.score(X_train, y_train)</span></span>
+<span id="cb24-70"><a href="#cb24-70" aria-hidden="true" tabindex="-1"></a><span class="co"># model1.score(X_test, y_test)</span></span>
+<span id="cb24-71"><a href="#cb24-71" aria-hidden="true" tabindex="-1"></a><span class="co"># model.coef_</span></span>
+<span id="cb24-72"><a href="#cb24-72" aria-hidden="true" tabindex="-1"></a><span class="co"># model.intercept_</span></span>
+<span id="cb24-73"><a href="#cb24-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Y_pred = model1.predict(X_test)</span></span>
+<span id="cb24-74"><a href="#cb24-74" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.scatter(x=y_test, y=Y_pred)</span></span>
+<span id="cb24-75"><a href="#cb24-75" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.plot(y_test, Y_pred, color='red')    </span></span>
+<span id="cb24-76"><a href="#cb24-76" aria-hidden="true" tabindex="-1"></a><span class="co"># sns.regplot(x=y_test, y=Y_pred)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     const  State and local income tax refunds amount  Number of farm returns  \
 183    1.0                                        0.0                    22.0   
@@ -1257,7 +1292,7 @@ Credited to next year’s estimated tax amount</code></pre>
 [368 rows x 10 columns]</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="19">
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>OLS Regression Results</caption>
 <tbody>
 <tr class="odd">
@@ -1280,13 +1315,13 @@ Credited to next year’s estimated tax amount</code></pre>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Date:</td>
-<td>Fri, 12 Jul 2024</td>
+<td>Thu, 25 Jul 2024</td>
 <td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
 <td>1.79e-105</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Time:</td>
-<td>22:23:56</td>
+<td>19:18:40</td>
 <td data-quarto-table-cell-role="th">Log-Likelihood:</td>
 <td>-499.86</td>
 </tr>
@@ -1316,7 +1351,7 @@ Credited to next year’s estimated tax amount</code></pre>
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <tbody>
 <tr class="odd">
 <td></td>
@@ -1419,7 +1454,7 @@ Credited to next year’s estimated tax amount</code></pre>
 </tr>
 </tbody>
 </table>
-<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Omnibus:</td>
@@ -1450,45 +1485,45 @@ Credited to next year’s estimated tax amount</code></pre>
 <br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.<br>[2] The condition number is large, 2.8e+05. This might indicate that there are<br>strong multicollinearity or other numerical problems.
 </div>
 </div>
-<div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>_<span class="co"># model values</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>model_fitted_y <span class="op">=</span> results2mod.fittedvalues</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># model residuals</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>model_residuals <span class="op">=</span> results2mod.resid</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># normalized residuals</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>model_norm_residuals <span class="op">=</span> results2mod.get_influence().resid_studentized_internal</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="co"># absolute squared normalized residuals</span></span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>model_norm_residuals_abs_sqrt <span class="op">=</span> np.sqrt(np.<span class="bu">abs</span>(model_norm_residuals))</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="co"># absolute residuals</span></span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>model_abs_resid <span class="op">=</span> np.<span class="bu">abs</span>(model_residuals)</span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="co"># leverage, from statsmodels internals</span></span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>model_leverage <span class="op">=</span> results2mod.get_influence().hat_matrix_diag</span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model_leverage)</span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a><span class="co"># cook's distance, from statsmodels internals</span></span>
-<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>model_cooks <span class="op">=</span> results2mod.get_influence().cooks_distance[<span class="dv">0</span>]</span>
-<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>plot_lm_1 <span class="op">=</span> plt.figure()</span>
-<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>] <span class="op">=</span> sns.residplot(x<span class="op">=</span>model_fitted_y, y<span class="op">=</span>dataframe.columns[<span class="op">-</span><span class="dv">1</span>], data<span class="op">=</span>dataframe,</span>
-<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>                          lowess<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>                          scatter_kws<span class="op">=</span>{<span class="st">'alpha'</span>: <span class="fl">0.5</span>},</span>
-<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>                          line_kws<span class="op">=</span>{<span class="st">'color'</span>: <span class="st">'red'</span>, <span class="st">'lw'</span>: <span class="dv">1</span>, <span class="st">'alpha'</span>: <span class="fl">0.8</span>})</span>
-<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>].set_title(<span class="st">'Residuals vs Fitted'</span>)</span>
-<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Fitted values'</span>)</span>
-<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Residuals'</span>)</span>
-<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> DataFrame()</span>
-<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'res'</span>] <span class="op">=</span> model_residuals</span>
-<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'fitted'</span>] <span class="op">=</span> model_fitted_y</span>
-<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'count'</span>] <span class="op">=</span> dataframe[<span class="st">'Vehicle Count'</span>]</span>
-<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'index'</span>] <span class="op">=</span> df.index</span>
-<span id="cb31-37"><a href="#cb31-37" aria-hidden="true" tabindex="-1"></a>maxr <span class="op">=</span> np.<span class="bu">max</span>(model_residuals)</span>
-<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a>df.sort_values(<span class="st">'res'</span>, ascending<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="d32b97b5" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>_<span class="co"># model values</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>model_fitted_y <span class="op">=</span> results2mod.fittedvalues</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># model residuals</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>model_residuals <span class="op">=</span> results2mod.resid</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># normalized residuals</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>model_norm_residuals <span class="op">=</span> results2mod.get_influence().resid_studentized_internal</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># absolute squared normalized residuals</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>model_norm_residuals_abs_sqrt <span class="op">=</span> np.sqrt(np.<span class="bu">abs</span>(model_norm_residuals))</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="co"># absolute residuals</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>model_abs_resid <span class="op">=</span> np.<span class="bu">abs</span>(model_residuals)</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="co"># leverage, from statsmodels internals</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>model_leverage <span class="op">=</span> results2mod.get_influence().hat_matrix_diag</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model_leverage)</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="co"># cook's distance, from statsmodels internals</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>model_cooks <span class="op">=</span> results2mod.get_influence().cooks_distance[<span class="dv">0</span>]</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>plot_lm_1 <span class="op">=</span> plt.figure()</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>] <span class="op">=</span> sns.residplot(x<span class="op">=</span>model_fitted_y, y<span class="op">=</span>dataframe.columns[<span class="op">-</span><span class="dv">1</span>], data<span class="op">=</span>dataframe,</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>                          lowess<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>                          scatter_kws<span class="op">=</span>{<span class="st">'alpha'</span>: <span class="fl">0.5</span>},</span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>                          line_kws<span class="op">=</span>{<span class="st">'color'</span>: <span class="st">'red'</span>, <span class="st">'lw'</span>: <span class="dv">1</span>, <span class="st">'alpha'</span>: <span class="fl">0.8</span>})</span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>].set_title(<span class="st">'Residuals vs Fitted'</span>)</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Fitted values'</span>)</span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>plot_lm_1.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Residuals'</span>)</span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> DataFrame()</span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'res'</span>] <span class="op">=</span> model_residuals</span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'fitted'</span>] <span class="op">=</span> model_fitted_y</span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'count'</span>] <span class="op">=</span> dataframe[<span class="st">'Vehicle Count'</span>]</span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'index'</span>] <span class="op">=</span> df.index</span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>maxr <span class="op">=</span> np.<span class="bu">max</span>(model_residuals)</span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>df.sort_values(<span class="st">'res'</span>, ascending<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[0.01826582 0.03785969 0.04543135 0.0234968  0.00723828 0.03171761
  0.00642651 0.00654863 0.00658194 0.00626243 0.02694293 0.01873456
@@ -1557,7 +1592,7 @@ Credited to next year’s estimated tax amount</code></pre>
 <div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -1652,111 +1687,131 @@ Credited to next year’s estimated tax amount</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-21-output-3.png" width="582" height="447"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-21-output-3.png" width="582" height="447" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <section id="normal-q-q-plot-1" class="level4">
 <h4 class="anchored" data-anchor-id="normal-q-q-plot-1">Normal Q-Q Plot</h4>
 <p>This plot shows if the residuals are normally distributed. A good normal QQ plot has all of the residuals lying on or close to the red line.</p>
-<div class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>QQ <span class="op">=</span> ProbPlot(model_norm_residuals)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>plot_lm_2 <span class="op">=</span> QQ.qqplot(line<span class="op">=</span><span class="st">'45'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, color<span class="op">=</span><span class="st">'#4C72B0'</span>, lw<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>plot_lm_2.axes[<span class="dv">0</span>].set_title(<span class="st">'Normal Q-Q'</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>plot_lm_2.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Theoretical Quantiles'</span>)</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>plot_lm_2.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Standardized Residuals'</span>)</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># annotations</span></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>abs_norm_resid <span class="op">=</span> np.flip(np.argsort(np.<span class="bu">abs</span>(model_norm_residuals)), <span class="dv">0</span>)</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>abs_norm_resid_top_3 <span class="op">=</span> abs_norm_resid[:<span class="dv">3</span>]</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r, i <span class="kw">in</span> <span class="bu">enumerate</span>(abs_norm_resid_top_3):</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    plot_lm_2.axes[<span class="dv">0</span>].annotate(i,</span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>                               xy<span class="op">=</span>(np.flip(QQ.theoretical_quantiles, <span class="dv">0</span>)[r],</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>                                   model_norm_residuals[i]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="0f5d796a" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>QQ <span class="op">=</span> ProbPlot(model_norm_residuals)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>plot_lm_2 <span class="op">=</span> QQ.qqplot(line<span class="op">=</span><span class="st">'45'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, color<span class="op">=</span><span class="st">'#4C72B0'</span>, lw<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>plot_lm_2.axes[<span class="dv">0</span>].set_title(<span class="st">'Normal Q-Q'</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>plot_lm_2.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Theoretical Quantiles'</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>plot_lm_2.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Standardized Residuals'</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># annotations</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>abs_norm_resid <span class="op">=</span> np.flip(np.argsort(np.<span class="bu">abs</span>(model_norm_residuals)), <span class="dv">0</span>)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>abs_norm_resid_top_3 <span class="op">=</span> abs_norm_resid[:<span class="dv">3</span>]</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r, i <span class="kw">in</span> <span class="bu">enumerate</span>(abs_norm_resid_top_3):</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    plot_lm_2.axes[<span class="dv">0</span>].annotate(i,</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>                               xy<span class="op">=</span>(np.flip(QQ.theoretical_quantiles, <span class="dv">0</span>)[r],</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>                                   model_norm_residuals[i]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-22-output-1.png" width="582" height="447"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-22-output-1.png" width="582" height="447" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="scale-location-1" class="level4">
 <h4 class="anchored" data-anchor-id="scale-location-1">Scale-Location</h4>
 <p>This plot is a way to check if the residuals suffer from non-constant variance, aka heteroscedasticity.</p>
-<div class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>plot_lm_3 <span class="op">=</span> plt.figure()</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(model_fitted_y, model_norm_residuals_abs_sqrt, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>sns.regplot(</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>model_fitted_y, </span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>model_norm_residuals_abs_sqrt,</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    scatter<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    ci<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    lowess<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    line_kws<span class="op">=</span>{<span class="st">'color'</span>: <span class="st">'red'</span>, <span class="st">'lw'</span>: <span class="dv">1</span>, <span class="st">'alpha'</span>: <span class="fl">0.8</span>})</span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>plot_lm_3.axes[<span class="dv">0</span>].set_title(<span class="st">'Scale-Location'</span>)</span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>plot_lm_3.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Fitted values'</span>)</span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>plot_lm_3.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'$\sqrt{|Standardized Residuals|}$'</span>)</span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="co"># annotations</span></span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>abs_sq_norm_resid <span class="op">=</span> np.flip(np.argsort(model_norm_residuals_abs_sqrt), <span class="dv">0</span>)</span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>abs_sq_norm_resid_top_3 <span class="op">=</span> abs_sq_norm_resid[:<span class="dv">3</span>]</span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r, i <span class="kw">in</span> <span class="bu">enumerate</span>(abs_sq_norm_resid_top_3):</span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>    plot_lm_3.axes[<span class="dv">0</span>].annotate(</span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>        i,</span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>        xy<span class="op">=</span>(model_fitted_y[i],</span>
-<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>        model_norm_residuals_abs_sqrt[i]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="4950e5aa" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>plot_lm_3 <span class="op">=</span> plt.figure()</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(model_fitted_y, model_norm_residuals_abs_sqrt, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>sns.regplot(</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>model_fitted_y, </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>model_norm_residuals_abs_sqrt,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    scatter<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    ci<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    lowess<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    line_kws<span class="op">=</span>{<span class="st">'color'</span>: <span class="st">'red'</span>, <span class="st">'lw'</span>: <span class="dv">1</span>, <span class="st">'alpha'</span>: <span class="fl">0.8</span>})</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>plot_lm_3.axes[<span class="dv">0</span>].set_title(<span class="st">'Scale-Location'</span>)</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>plot_lm_3.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Fitted values'</span>)</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>plot_lm_3.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'$\sqrt{|Standardized Residuals|}$'</span>)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="co"># annotations</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>abs_sq_norm_resid <span class="op">=</span> np.flip(np.argsort(model_norm_residuals_abs_sqrt), <span class="dv">0</span>)</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>abs_sq_norm_resid_top_3 <span class="op">=</span> abs_sq_norm_resid[:<span class="dv">3</span>]</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r, i <span class="kw">in</span> <span class="bu">enumerate</span>(abs_sq_norm_resid_top_3):</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    plot_lm_3.axes[<span class="dv">0</span>].annotate(</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>        i,</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>        xy<span class="op">=</span>(model_fitted_y[i],</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>        model_norm_residuals_abs_sqrt[i]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-23-output-1.png" width="608" height="447"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-23-output-1.png" width="609" height="447" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="residuals-vs.-leverage-1" class="level4">
 <h4 class="anchored" data-anchor-id="residuals-vs.-leverage-1">Residuals vs.&nbsp;Leverage</h4>
 <p>Unlike outliers, which have an unusually large y value, leverage points have extreme x values. This may not seem so bad at face value, but it can have damaging effects on the model because the β coefficients are very sensitive to leverage points. The purpose of the Residuals vs Leverage plot is to identify these problematic observations.</p>
-<div class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>plot_lm_4 <span class="op">=</span> plt.figure()</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(model_leverage, model_norm_residuals, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>sns.regplot(x<span class="op">=</span>model_leverage, y<span class="op">=</span>model_norm_residuals,</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>            scatter<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>            ci<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>            lowess<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>            line_kws<span class="op">=</span>{<span class="st">'color'</span>: <span class="st">'red'</span>, <span class="st">'lw'</span>: <span class="dv">1</span>, <span class="st">'alpha'</span>: <span class="fl">0.8</span>})</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_xlim(<span class="dv">0</span>, np.<span class="bu">max</span>(model_leverage)<span class="op">+</span><span class="fl">0.01</span>)</span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_ylim(<span class="op">-</span><span class="dv">3</span>, <span class="dv">5</span>)</span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_title(<span class="st">'Residuals vs Leverage'</span>)</span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Leverage'</span>)</span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Standardized Residuals'</span>)</span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="co"># annotations</span></span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>leverage_top_3 <span class="op">=</span> np.flip(np.argsort(model_cooks), <span class="dv">0</span>)[:<span class="dv">3</span>]</span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> leverage_top_3:</span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>    plot_lm_4.axes[<span class="dv">0</span>].annotate(i,</span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>                                xy<span class="op">=</span>(model_leverage[i],</span>
-<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>                                    model_norm_residuals[i]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="a829fbd0" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>plot_lm_4 <span class="op">=</span> plt.figure()</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(model_leverage, model_norm_residuals, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>sns.regplot(x<span class="op">=</span>model_leverage, y<span class="op">=</span>model_norm_residuals,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>            scatter<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>            ci<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>            lowess<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>            line_kws<span class="op">=</span>{<span class="st">'color'</span>: <span class="st">'red'</span>, <span class="st">'lw'</span>: <span class="dv">1</span>, <span class="st">'alpha'</span>: <span class="fl">0.8</span>})</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_xlim(<span class="dv">0</span>, np.<span class="bu">max</span>(model_leverage)<span class="op">+</span><span class="fl">0.01</span>)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_ylim(<span class="op">-</span><span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_title(<span class="st">'Residuals vs Leverage'</span>)</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Leverage'</span>)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>plot_lm_4.axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Standardized Residuals'</span>)</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="co"># annotations</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>leverage_top_3 <span class="op">=</span> np.flip(np.argsort(model_cooks), <span class="dv">0</span>)[:<span class="dv">3</span>]</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> leverage_top_3:</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>    plot_lm_4.axes[<span class="dv">0</span>].annotate(i,</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>                                xy<span class="op">=</span>(model_leverage[i],</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>                                    model_norm_residuals[i]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-24-output-1.png" width="582" height="447"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-24-output-1.png" width="582" height="447" class="figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cookdplot(model, ax<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ax <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>        fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    cooks_d <span class="op">=</span> model.get_influence().cooks_distance[<span class="dv">0</span>]</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    ax.vlines(<span class="bu">range</span>(<span class="bu">len</span>(cooks_d)),<span class="dv">0</span>,cooks_d)</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># annotations</span></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    cookd_top_3 <span class="op">=</span> np.flip(np.argsort(cooks_d), <span class="dv">0</span>)[:<span class="dv">3</span>]</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> cookd_top_3:</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>        ax.annotate(i, xy<span class="op">=</span>(i, cooks_d[i]),color <span class="op">=</span> <span class="st">'C3'</span>)</span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="st">"Cook's Distance"</span> , fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Obs. Number'</span>)</span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Cook's distance"</span>)</span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ax</span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>cookdplot(results2mod)</span>
-<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="8a7ee684" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cookdplot(model, ax<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ax <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>        fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    cooks_d <span class="op">=</span> model.get_influence().cooks_distance[<span class="dv">0</span>]</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    ax.vlines(<span class="bu">range</span>(<span class="bu">len</span>(cooks_d)),<span class="dv">0</span>,cooks_d)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># annotations</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    cookd_top_3 <span class="op">=</span> np.flip(np.argsort(cooks_d), <span class="dv">0</span>)[:<span class="dv">3</span>]</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> cookd_top_3:</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>        ax.annotate(i, xy<span class="op">=</span>(i, cooks_d[i]),color <span class="op">=</span> <span class="st">'C3'</span>)</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="st">"Cook's Distance"</span> , fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Obs. Number'</span>)</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Cook's distance"</span>)</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ax</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>cookdplot(results2mod)</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="eda-ev_files/figure-html/cell-25-output-1.png" width="593" height="447"></p>
+<div>
+<figure class="figure">
+<p><img src="eda-ev_files/figure-html/cell-25-output-1.png" width="593" height="447" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -1848,10 +1903,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1861,8 +1933,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1874,7 +1955,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1918,6 +2122,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1943,6 +2148,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2003,6 +2234,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

@@ -8,7 +8,7 @@ format:
     toc: false
     number-sections: true
     highlight-style: github
-bibliography: ../../../assets/dataanalysis-references.bib
+#bibliography: ../../../assets/dataanalysis-references.bib
 csl: ../../../assets/vancouver.csl
 ---
 
