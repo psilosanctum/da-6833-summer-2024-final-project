@@ -21,7 +21,7 @@ knit this file to obtain Supplement.docx which is the final report.
 - **Python Version 3.11.9**
 ### Execute these commands in your terminal
 - **Install Homebrew:** `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-- **Install 'ffmpeg' via Homebrew:** `brew install libomp`
+- **Install 'libomp' via Homebrew:** `brew install libomp`
 - **Create local virtual env:** `python3 -m venv .venv`
 - **Activate local virtual env:** `source .venv/bin/activate`
 - **Install Python dependencies:** `pip3 install -r requirements.txt`
