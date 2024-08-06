@@ -1,5 +1,5 @@
 ---
-title: "Example Manuscript Template for a Data Analysis Project"
+title: "Using IRS Data to Predict Electric Vehicle Count"
 subtitle: ""
 author: Sri Lakshmi Chundru, Collin Real, Joaquin Ramirez, Seth Harris
 date: "`r Sys.Date()`"
@@ -12,28 +12,11 @@ bibliography: ../../assets/dataanalysis-references.bib
 csl: ../../assets/apa.csl
 ---
 
-
-```{r, echo=FALSE, message=FALSE}
-# load a few R packages
-library(here)
-library(knitr)
-```
-Data Sources for the work:
-
--   https://www.google.com/publicdata/directory
--   https://www.data.gov/
--   https://github.com/awesomedata/awesome-public-datasets
--   https://registry.opendata.aws/
--   https://www.kaggle.com/datasets/jainaru/electric-vehicle-population
-
-
 # Summary/Abstract
-_Write a summary of your project._
 
 Electric vehicle market penetration is an important topic of interest for a variety of government agencies and automotive companies in terms of planning future charging infrastructure and inventory management. This project aims to aid this process by creation of a data driven model that can predict the number of electric vehicles in a given zip code based on a variety of factors. The data used in this project was sourced from the Washington State Department of Licensing (DOL) and includes information on Battery Electric Vehicles (BEVs) and Plug-in Hybrid Electric Vehicles (PHEVs) registered in Washington State. The data set contains 181,458 observations and 17 variables, including Vehicle Identification Number (VIN), county, city, model year, electric range, and more. The project will involve data cleaning, exploratory data analysis, and statistical modeling to identify key factors influencing electric vehicle adoption and predict the number of electric vehicles in a given zip code. The results of this project will provide valuable insights for policymakers, urban planners, and automotive companies to support the transition to sustainable transportation.
 
 {{< pagebreak >}}
-
 
 # Introduction 
 
@@ -43,14 +26,20 @@ A second set of data was obtained from the IRS and contains information on elect
 
 
 # Data set Analysis 
-```{r}
-data_location <- here::here("data","raw-data","Electric_Vehicle_Population_Data.csv")
-data <- read.csv(data_location)
-output <- capture.output(str(data))
-cat(output[1:3], sep="\n")
-head(data)
-summary(data)
-colSums(is.na(data))
+```{python}
+import pandas as pd
+pd.set_option('display.max_rows', None)
+
+# Load the dataset
+data = pd.read_csv('../../data/processed-data/brand_model_year_tax_data.csv').drop(
+    [
+        'The State Federal Information Processing System (FIPS) code',
+        'The State associated with the ZIP code',
+        'Number of returns [3]'
+    ],
+    axis = 1
+)
+data.head(10)
 ```
 
 **- (c) Explain the question you want to answer using the data. What will be your outcome(s) of interest (if any)? What (if any) specific predictors will you focus on? What relations/patterns are you looking for in the data?**
@@ -239,10 +228,6 @@ These plots provide insights into the price and range variations of electric veh
 - Calculate correlation coefficients for numerical variables.
 - Use cross-tabulations to explore relationships between categorical and numerical variables.
 
-**Geospatial Analysis (if applicable):**
-
-- Use geographic mapping tools to identify clusters or patterns in vehicle registrations.
-
 **Exploratory Data Analysis (EDA):**
 
 -Perform in-depth analysis to identify trends, patterns, or outliers.
@@ -250,7 +235,7 @@ These plots provide insights into the price and range variations of electric veh
 
 **Statistical Model**
 - First iteration of models
-- Produced a few statistically significant tax metrics for predicting the number of EVs in a given county
+- Produced a few statistically significant tax metrics for predicting the number of EVs in a given zip code
 - Washington demographics datasets could further enhance our analysis
 
 **Conclusion:**

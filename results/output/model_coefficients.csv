@@ -1,0 +1,211 @@
+Feature,Coefficient,Model
+Number of single returns,5.6715463870204985e-05,XGBoost_Regressor
+Number of joint returns,0.00041972639155574143,XGBoost_Regressor
+Number of head of household returns,4.034479206893593e-05,XGBoost_Regressor
+Number of electronically filed returns,0.00010769260552478954,XGBoost_Regressor
+Number of computer prepared paper returns,0.0002331210271222517,XGBoost_Regressor
+Number of returns with paid preparer's signature,4.9621517973719165e-05,XGBoost_Regressor
+Number of returns with direct deposit,5.089502337796148e-06,XGBoost_Regressor
+Number of returns with virtual currency indicator,0.002324093598872423,XGBoost_Regressor
+Number of individuals,0.0010449090041220188,XGBoost_Regressor
+Total number of volunteer prepared returns,3.493592157610692e-05,XGBoost_Regressor
+Number of volunteer income tax assistance (VITA) prepared returns,0.0001808323577279225,XGBoost_Regressor
+Number of tax counseling for the elderly (TCE) prepared returns,0.00030635177972726524,XGBoost_Regressor
+Number of refund anticipation check returns,0.00013096649490762502,XGBoost_Regressor
+Number of elderly returns,0.0006570038967765868,XGBoost_Regressor
+Salaries and wages amount,0.04323498159646988,XGBoost_Regressor
+Taxable interest amount,0.00011588453344302252,XGBoost_Regressor
+Ordinary dividends amount,0.00013859102909918875,XGBoost_Regressor
+Qualified dividends amount,0.0001994522026507184,XGBoost_Regressor
+State and local income tax refunds amount,0.0007299035205505788,XGBoost_Regressor
+Business or professional net income (less loss) amount,0.021596424281597137,XGBoost_Regressor
+Net capital gain (less loss) amount,0.0016014317516237497,XGBoost_Regressor
+Taxable individual retirement arrangements distributions amount,0.000324240536428988,XGBoost_Regressor
+Taxable pensions and annuities amount,0.000882037275005132,XGBoost_Regressor
+Number of farm returns,5.290865829010727e-06,XGBoost_Regressor
+Unemployment compensation amount,4.0942140913102776e-05,XGBoost_Regressor
+Taxable Social Security benefits amount,0.0011787045514211059,XGBoost_Regressor
+Partnership_S-corp net income (less loss) amount,0.00011340522905811667,XGBoost_Regressor
+Educator expenses amount,0.00011275779252173379,XGBoost_Regressor
+Self-employed (Keogh) retirement plans amount,0.030316732823848724,XGBoost_Regressor
+Self-employed health insurance deduction amount,0.6330535411834717,XGBoost_Regressor
+Individual retirement arrangement payments amount,0.07302647829055786,XGBoost_Regressor
+Student loan interest deduction amount,0.00014164928870741278,XGBoost_Regressor
+Charitable contributions if took standard deduction,2.8122803996666335e-05,XGBoost_Regressor
+Basic standard deduction amount,1.2793940186384134e-05,XGBoost_Regressor
+Additional standard deduction amount,0.007860882207751274,XGBoost_Regressor
+Total medical and dental expense deduction amount,0.00023340406187344342,XGBoost_Regressor
+State and local income taxes amount,0.00032710182131268084,XGBoost_Regressor
+State and local general sales tax amount,0.000701156968716532,XGBoost_Regressor
+Real estate taxes amount,0.017873218283057213,XGBoost_Regressor
+Personal property taxes amount,0.0029952889308333397,XGBoost_Regressor
+Limited state and local taxes,0.005969653371721506,XGBoost_Regressor
+Home mortgage interest paid amount,0.03603971004486084,XGBoost_Regressor
+Home mortgage from personal seller amount,0.04898137226700783,XGBoost_Regressor
+Deductible points amount,0.006820040754973888,XGBoost_Regressor
+Qualified mortgage insurance premiums amount,7.293395174201578e-05,XGBoost_Regressor
+Investment interest paid amount,0.00047048195847310126,XGBoost_Regressor
+Total charitable contributions amount,0.0009005190804600716,XGBoost_Regressor
+Other non-limited miscellaneous deductions amount,0.00012373278150334954,XGBoost_Regressor
+Qualified business income deduction,0.00020232991664670408,XGBoost_Regressor
+Excess advance premium tax credit repayment amount,0.00010340714652556926,XGBoost_Regressor
+Foreign tax credit amount,0.004132402129471302,XGBoost_Regressor
+Child and dependent care credit amount,5.10249228682369e-05,XGBoost_Regressor
+Nonrefundable education credit amount,0.006845677271485329,XGBoost_Regressor
+Retirement savings contribution credit amount,0.00032289433875121176,XGBoost_Regressor
+Nonrefundable child and other dependent credit amount,3.590476626413874e-05,XGBoost_Regressor
+Residential energy tax credit amount,0.0008059783722274005,XGBoost_Regressor
+Self-employment tax amount,0.032866086810827255,XGBoost_Regressor
+Advance premium tax credit amount,0.0007240431732498109,XGBoost_Regressor
+Earned income credit amount,3.6949630157323554e-05,XGBoost_Regressor
+Excess earned income credit (refundable) amount,2.6820660423254594e-05,XGBoost_Regressor
+Refundable child tax credit or additional child tax credit amount,0.00016544348909519613,XGBoost_Regressor
+Refundable education credit amount,7.9987985373009e-05,XGBoost_Regressor
+Net premium tax credit amount,0.008515690453350544,XGBoost_Regressor
+"Qualified sick and family leave credit for leave taken before April ,  amount",1.8184036889579147e-05,XGBoost_Regressor
+Refundable child and dependent care credit,0.0004820424655918032,XGBoost_Regressor
+"Qualified sick and family leave credit for leave taken after March ,",0.0006885190377943218,XGBoost_Regressor
+Recovery rebate credit amount,9.576245247444604e-06,XGBoost_Regressor
+"Economic impact payment third round amount ,",0.00012333592167124152,XGBoost_Regressor
+Additional Medicare tax amount,0.0004657301469705999,XGBoost_Regressor
+Net investment income tax amount,0.0014838733477517962,XGBoost_Regressor
+Number of single returns,0.0,Decision_Tree_Regressor
+Number of joint returns,0.0,Decision_Tree_Regressor
+Number of head of household returns,0.0,Decision_Tree_Regressor
+Number of electronically filed returns,0.0,Decision_Tree_Regressor
+Number of computer prepared paper returns,0.0,Decision_Tree_Regressor
+Number of returns with paid preparer's signature,0.0,Decision_Tree_Regressor
+Number of returns with direct deposit,0.0,Decision_Tree_Regressor
+Number of returns with virtual currency indicator,0.024792846892971804,Decision_Tree_Regressor
+Number of individuals,0.0,Decision_Tree_Regressor
+Total number of volunteer prepared returns,0.0,Decision_Tree_Regressor
+Number of volunteer income tax assistance (VITA) prepared returns,0.00020214089463375744,Decision_Tree_Regressor
+Number of tax counseling for the elderly (TCE) prepared returns,0.0008645354814731489,Decision_Tree_Regressor
+Number of refund anticipation check returns,0.0,Decision_Tree_Regressor
+Number of elderly returns,0.0,Decision_Tree_Regressor
+Salaries and wages amount,0.04103209444997824,Decision_Tree_Regressor
+Taxable interest amount,0.0,Decision_Tree_Regressor
+Ordinary dividends amount,6.63117049534587e-05,Decision_Tree_Regressor
+Qualified dividends amount,0.0017579529023021433,Decision_Tree_Regressor
+State and local income tax refunds amount,0.0015960435473803243,Decision_Tree_Regressor
+Business or professional net income (less loss) amount,0.00012214909850914732,Decision_Tree_Regressor
+Net capital gain (less loss) amount,0.0025339824724915434,Decision_Tree_Regressor
+Taxable individual retirement arrangements distributions amount,0.0,Decision_Tree_Regressor
+Taxable pensions and annuities amount,0.0,Decision_Tree_Regressor
+Number of farm returns,0.0,Decision_Tree_Regressor
+Unemployment compensation amount,0.0,Decision_Tree_Regressor
+Taxable Social Security benefits amount,0.0,Decision_Tree_Regressor
+Partnership_S-corp net income (less loss) amount,0.0005272997072683886,Decision_Tree_Regressor
+Educator expenses amount,0.0,Decision_Tree_Regressor
+Self-employed (Keogh) retirement plans amount,0.0,Decision_Tree_Regressor
+Self-employed health insurance deduction amount,0.6555518687178373,Decision_Tree_Regressor
+Individual retirement arrangement payments amount,0.09640109242754528,Decision_Tree_Regressor
+Student loan interest deduction amount,0.007101702292652016,Decision_Tree_Regressor
+Charitable contributions if took standard deduction,0.0,Decision_Tree_Regressor
+Basic standard deduction amount,0.0,Decision_Tree_Regressor
+Additional standard deduction amount,0.0,Decision_Tree_Regressor
+Total medical and dental expense deduction amount,0.0,Decision_Tree_Regressor
+State and local income taxes amount,0.0,Decision_Tree_Regressor
+State and local general sales tax amount,0.0,Decision_Tree_Regressor
+Real estate taxes amount,0.015771179242618158,Decision_Tree_Regressor
+Personal property taxes amount,0.0,Decision_Tree_Regressor
+Limited state and local taxes,0.002781131813576908,Decision_Tree_Regressor
+Home mortgage interest paid amount,0.14502893497408723,Decision_Tree_Regressor
+Home mortgage from personal seller amount,0.00039435515458605147,Decision_Tree_Regressor
+Deductible points amount,0.0,Decision_Tree_Regressor
+Qualified mortgage insurance premiums amount,0.0,Decision_Tree_Regressor
+Investment interest paid amount,0.0,Decision_Tree_Regressor
+Total charitable contributions amount,0.0,Decision_Tree_Regressor
+Other non-limited miscellaneous deductions amount,0.0,Decision_Tree_Regressor
+Qualified business income deduction,0.0,Decision_Tree_Regressor
+Excess advance premium tax credit repayment amount,0.0,Decision_Tree_Regressor
+Foreign tax credit amount,0.0,Decision_Tree_Regressor
+Child and dependent care credit amount,0.0,Decision_Tree_Regressor
+Nonrefundable education credit amount,0.0,Decision_Tree_Regressor
+Retirement savings contribution credit amount,0.0,Decision_Tree_Regressor
+Nonrefundable child and other dependent credit amount,0.0,Decision_Tree_Regressor
+Residential energy tax credit amount,0.0,Decision_Tree_Regressor
+Self-employment tax amount,0.0,Decision_Tree_Regressor
+Advance premium tax credit amount,0.0016824389076076707,Decision_Tree_Regressor
+Earned income credit amount,0.0,Decision_Tree_Regressor
+Excess earned income credit (refundable) amount,0.0,Decision_Tree_Regressor
+Refundable child tax credit or additional child tax credit amount,0.0,Decision_Tree_Regressor
+Refundable education credit amount,0.0,Decision_Tree_Regressor
+Net premium tax credit amount,0.0,Decision_Tree_Regressor
+"Qualified sick and family leave credit for leave taken before April ,  amount",0.0,Decision_Tree_Regressor
+Refundable child and dependent care credit,0.0,Decision_Tree_Regressor
+"Qualified sick and family leave credit for leave taken after March ,",0.0,Decision_Tree_Regressor
+Recovery rebate credit amount,0.0,Decision_Tree_Regressor
+"Economic impact payment third round amount ,",0.0,Decision_Tree_Regressor
+Additional Medicare tax amount,0.0,Decision_Tree_Regressor
+Net investment income tax amount,0.0017919393175273007,Decision_Tree_Regressor
+Number of single returns,0.00018769876527752142,Random_Forest_Regressor
+Number of joint returns,0.0029910238973000084,Random_Forest_Regressor
+Number of head of household returns,0.00015066800630112977,Random_Forest_Regressor
+Number of electronically filed returns,0.0005458394763443725,Random_Forest_Regressor
+Number of computer prepared paper returns,0.0028638994140144213,Random_Forest_Regressor
+Number of returns with paid preparer's signature,0.0007077497146699116,Random_Forest_Regressor
+Number of returns with direct deposit,6.724685601534762e-05,Random_Forest_Regressor
+Number of returns with virtual currency indicator,0.010084064267553587,Random_Forest_Regressor
+Number of individuals,0.00012397074069288858,Random_Forest_Regressor
+Total number of volunteer prepared returns,0.0004571467817213363,Random_Forest_Regressor
+Number of volunteer income tax assistance (VITA) prepared returns,0.0010826174493619276,Random_Forest_Regressor
+Number of tax counseling for the elderly (TCE) prepared returns,0.0010789291558898262,Random_Forest_Regressor
+Number of refund anticipation check returns,0.00010008705682215731,Random_Forest_Regressor
+Number of elderly returns,0.0013674711957780035,Random_Forest_Regressor
+Salaries and wages amount,0.0971924280847775,Random_Forest_Regressor
+Taxable interest amount,0.002752950054921118,Random_Forest_Regressor
+Ordinary dividends amount,0.0008268797673228604,Random_Forest_Regressor
+Qualified dividends amount,0.0002868726237030414,Random_Forest_Regressor
+State and local income tax refunds amount,0.0005919024822165055,Random_Forest_Regressor
+Business or professional net income (less loss) amount,0.015329655057021776,Random_Forest_Regressor
+Net capital gain (less loss) amount,0.0696163605812644,Random_Forest_Regressor
+Taxable individual retirement arrangements distributions amount,0.0015692476006085767,Random_Forest_Regressor
+Taxable pensions and annuities amount,0.0006176564694814632,Random_Forest_Regressor
+Number of farm returns,9.72346601416855e-05,Random_Forest_Regressor
+Unemployment compensation amount,0.000574380920514723,Random_Forest_Regressor
+Taxable Social Security benefits amount,0.006100368495417799,Random_Forest_Regressor
+Partnership_S-corp net income (less loss) amount,0.0006134066206259828,Random_Forest_Regressor
+Educator expenses amount,0.0002621797747300362,Random_Forest_Regressor
+Self-employed (Keogh) retirement plans amount,0.04848142420721196,Random_Forest_Regressor
+Self-employed health insurance deduction amount,0.19054424892300492,Random_Forest_Regressor
+Individual retirement arrangement payments amount,0.04266335423137466,Random_Forest_Regressor
+Student loan interest deduction amount,0.0003697470528179663,Random_Forest_Regressor
+Charitable contributions if took standard deduction,0.00036457540995224377,Random_Forest_Regressor
+Basic standard deduction amount,0.0011308173834021827,Random_Forest_Regressor
+Additional standard deduction amount,0.0002629355561845457,Random_Forest_Regressor
+Total medical and dental expense deduction amount,0.014750397860945293,Random_Forest_Regressor
+State and local income taxes amount,0.0006789665359441325,Random_Forest_Regressor
+State and local general sales tax amount,0.015175398762519351,Random_Forest_Regressor
+Real estate taxes amount,0.07603909719681706,Random_Forest_Regressor
+Personal property taxes amount,0.002727187081974217,Random_Forest_Regressor
+Limited state and local taxes,0.033366071408351586,Random_Forest_Regressor
+Home mortgage interest paid amount,0.03864476479563921,Random_Forest_Regressor
+Home mortgage from personal seller amount,0.05678870519705608,Random_Forest_Regressor
+Deductible points amount,0.028401810503237583,Random_Forest_Regressor
+Qualified mortgage insurance premiums amount,0.0002617963687422467,Random_Forest_Regressor
+Investment interest paid amount,0.00036729970652167224,Random_Forest_Regressor
+Total charitable contributions amount,0.0005212615517002938,Random_Forest_Regressor
+Other non-limited miscellaneous deductions amount,0.0006367002615361148,Random_Forest_Regressor
+Qualified business income deduction,0.0004831971829652828,Random_Forest_Regressor
+Excess advance premium tax credit repayment amount,0.0019151857749752242,Random_Forest_Regressor
+Foreign tax credit amount,0.004841698636520564,Random_Forest_Regressor
+Child and dependent care credit amount,0.000482686507261105,Random_Forest_Regressor
+Nonrefundable education credit amount,0.0005605961409402947,Random_Forest_Regressor
+Retirement savings contribution credit amount,0.0003022435237311812,Random_Forest_Regressor
+Nonrefundable child and other dependent credit amount,0.0009741902212284149,Random_Forest_Regressor
+Residential energy tax credit amount,0.0012775831044218708,Random_Forest_Regressor
+Self-employment tax amount,0.028004205675476523,Random_Forest_Regressor
+Advance premium tax credit amount,0.0009243021722480921,Random_Forest_Regressor
+Earned income credit amount,0.00014220601703584203,Random_Forest_Regressor
+Excess earned income credit (refundable) amount,0.0003386223126216068,Random_Forest_Regressor
+Refundable child tax credit or additional child tax credit amount,0.00034178709051761887,Random_Forest_Regressor
+Refundable education credit amount,0.00016728420731655782,Random_Forest_Regressor
+Net premium tax credit amount,0.1731046439958858,Random_Forest_Regressor
+"Qualified sick and family leave credit for leave taken before April ,  amount",0.0002508885836260131,Random_Forest_Regressor
+Refundable child and dependent care credit,0.0011218440920176948,Random_Forest_Regressor
+"Qualified sick and family leave credit for leave taken after March ,",0.0006841565626055052,Random_Forest_Regressor
+Recovery rebate credit amount,0.00021787455469911006,Random_Forest_Regressor
+"Economic impact payment third round amount ,",0.00020093645258312037,Random_Forest_Regressor
+Additional Medicare tax amount,0.005472192769256868,Random_Forest_Regressor
+Net investment income tax amount,0.0077751784566425985,Random_Forest_Regressor
