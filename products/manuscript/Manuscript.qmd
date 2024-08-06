@@ -19,7 +19,7 @@ Each model was trained and validated using cross-validation and a hold-out test 
 The results highlight the Random Forest model's effectiveness in handling diverse and complex datasets, making it a valuable tool for predicting vehicle counts in different zip codes. This study provides critical insights into the practical applications of machine learning in urban planning and resource management, particularly in the context of transportation and infrastructure development.
 
 ## Introduction
-The increasing adoption of electric vehicles (EVs) is a pivotal shift in the transportation sector, driven by growing environmental concerns, advancements in technology, and supportive government policies. Understanding the factors that influence the distribution of EVs is essential for developing targeted policies and infrastructure, such as charging stations and incentives. However, EV adoption is not uniform across regions; it varies significantly based on socio-economic and demographic factors. This study aims to explore these variations by predicting vehicle counts, particularly EVs, at the zip code level using a comprehensive dataset that combines electric vehicle registration data with individual income tax statistics from the Internal Revenue Service (IRS).
+The increasing adoption of electric vehicles (EVs) is a pivotal shift in the transportation sector, driven by growing environmental concerns, advancements in technology, and supportive government policies. Understanding the factors that influence the distribution of EVs is essential for developing targeted policies and infrastructure, such as charging stations and incentives. However, EV adoption is not uniform across regions; it varies significantly based on socio-economic and demographic factors. This study aims to explore these variations by predicting vehicle counts, particularly EVs, at the zip code level using a comprehensive dataset that combines electric vehicle registration data @kaggle with individual income tax statistics from the Internal Revenue Service (IRS) @irs.
 
 The IRS data offers detailed insights into various financial attributes of taxpayers by zip code, including income levels, deductions, and credits. By integrating this data with EV registration data, we can analyze the relationship between financial capacity, tax-related benefits, and vehicle ownership patterns. Such an analysis is crucial for identifying the socio-economic determinants of EV adoption, which can inform policymakers and urban planners.
 
@@ -119,6 +119,6 @@ The Random Forest model's ability to incorporate and weigh these diverse socio-e
 
 {{< pagebreak >}}
 ## Citations
-Jain, A. (n.d.). Electric vehicle population [Data set]. Kaggle. Retrieved June 6, 2024, from https://www.kaggle.com/datasets/jainaru/electric-vehicle-population <br/><br/>
+Jain, A. (n.d.). Electric vehicle population [Data set]. Kaggle. Retrieved June 6, 2024, from https://www.kaggle.com/datasets/jainaru/electric-vehicle-population <br/>
 
 Internal Revenue Service. (n.d.). SOI tax stats - Individual income tax statistics - ZIP code data (SOI). Retrieved June 16, 2024, from https://www.irs.gov/statistics/soi-tax-stats-individual-income-tax-statistics-zip-code-data-soi
