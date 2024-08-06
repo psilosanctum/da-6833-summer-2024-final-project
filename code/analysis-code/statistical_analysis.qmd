@@ -11,6 +11,7 @@ execute:
 ```{python}
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 import re
 pd.set_option('display.max_rows', None)
 
@@ -58,6 +59,10 @@ merged_data = grouped_data.merge(grouped_features, on='ZIPCODE')
 # Extracting the features (X) and target (y)
 X_grouped = merged_data[numeric_features_to_use]
 y_grouped = merged_data['Vehicle Count']
+
+scalar = StandardScaler()
+scale = scalar.fit_transform(X_grouped)
+print(scale)
 
 
 # Splitting the data into training and testing sets
@@ -206,7 +211,7 @@ print(dec_tree_feature_importance.head(10))
 print("\nTop 10 Important Features from Random Forest:")
 print(rand_for_feature_importance.head(10))
 
-rand_for_feature_importance_list = rand_for_feature_importance['Feature'].head(10).tolist()
+rand_for_feature_importance_list = xgboost_feature_importance['Feature'].head(10).tolist()
 print(rand_for_feature_importance_list)
 
 # Plotting function

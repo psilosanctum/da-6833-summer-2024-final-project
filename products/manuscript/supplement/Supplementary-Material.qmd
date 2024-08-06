@@ -46,18 +46,18 @@ A histogram-based implementation of gradient boosting that is particularly effic
 
 # Additional results
 ## Log-Transformed Histogram Examples
-![SE Health Insurance Deduction](../../../results/figures/histograms/Self-employed%20health%20insurance%20deduction%20amount_histogram.png)
+![Individual Retirement Payments](../../../results/figures/scatterplots/Individual%20retirement%20arrangement%20payments%20amount_scatterplot.png)
 
 ![Salary & Wages Amount](../../../results/figures/histograms/Salaries%20and%20wages%20amount_histogram.png)
 
-![Net Premium Tax Credit Amount](../../../results/figures/histograms/Net%20premium%20tax%20credit%20amount_histogram.png)
+![Home Mortgage Interest Paid](../../../results/figures/histograms/home%20mortgage%20interest%20paid%20amount_histogram.png)
 
 ## Log-Transformed Boxplot Examples
-![SE Health Insurance Deduction](../../../results/figures/boxplots/Self-employed%20health%20insurance%20deduction%20amount_boxplot.png)
+![Individual Retirement Payments](../../../results/figures/boxplots/Individual%20retirement%20arrangement%20payments%20amount_boxplot.png)
 
 ![Salary & Wages Amount](../../../results/figures/boxplots/Salaries%20and%20wages%20amount_boxplot.png)
 
-![Net Premium Tax Credit Amount](../../../results/figures/boxplots/Net%20premium%20tax%20credit%20amount_boxplot.png)
+![Home Mortgage Interest Paid](../../../results/figures/boxplots/home%20mortgage%20interest%20paid%20amount_boxplot.png)
 
 ## Model Comparison - MAE
 !['MAE'](../../../results/output/model_comparison/MAE.png)
@@ -70,6 +70,15 @@ A histogram-based implementation of gradient boosting that is particularly effic
 
 ## Model Comparison - RMSE
 !['RMSE'](../../../results/output/model_comparison/RMSE.png)
+
+## Variable Importance - Decision Tree
+!['Decision Tree Regressor'](../../../results/output/variable_importance/Decision%20Tree%20Regressor.png)
+
+## Variable Importance - Hist Gradient Boosting
+!['Hist Gradient Boosting'](../../../results/output/variable_importance/HistGradientBoostingRegressor%20(Permutation%20Importance).png)
+
+## Variable Importance - Random Forest
+!['Random Forest'](../../../results/output/variable_importance/Random%20Forest%20Regressor.png)
 
 # References
 - Jain, A. (n.d.). Electric vehicle population [Data set]. Kaggle. Retrieved June 6, 2024, from https://www.kaggle.com/datasets/jainaru/electric-vehicle-population <br/>
