@@ -1,5 +1,6 @@
 ---
-title: "Using IRS Data to Predict Electric Vehicle Count"
+title: "EV Predictive Modeling"
+subtitle: "IRS Tax Data - Zip Code"
 author: Sri Lakshmi Chundru, Collin Real, Joaquin Ramirez, Seth Harris
 format:
   docx:

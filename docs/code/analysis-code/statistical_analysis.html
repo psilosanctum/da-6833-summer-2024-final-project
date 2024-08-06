@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-08-06">
 
-<title>Predicting Electric Vehicle Count w/ IRS Data - Statistical Analysis</title>
+<title>EV Predictive Modeling - Statistical Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -107,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Predicting Electric Vehicle Count w/ IRS Data</span>
+    <span class="navbar-title">EV Predictive Modeling</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -175,12 +174,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">August 6, 2024</p>
-    </div>
-  </div>
   
     
   </div>
@@ -409,33 +402,31 @@ Random_Forest_Regressor - RMSE: 71.30168705871802, R-squared: 0.8854539974855006
 <span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Top 10 Important Features from Random Forest:"</span>)</span>
 <span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(rand_for_feature_importance.head(<span class="dv">10</span>))</span>
 <span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>rand_for_feature_importance_list <span class="op">=</span> xgboost_feature_importance[<span class="st">'Feature'</span>].head(<span class="dv">10</span>).tolist()</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(rand_for_feature_importance_list)</span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting function</span></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_feature_importance(importances, model_name):</span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">10</span>))</span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>    plt.barh(importances[<span class="st">'Feature'</span>], importances[<span class="st">'Importance'</span>], color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'Importance'</span>)</span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Feature'</span>)</span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f'Feature Importance - </span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>    plt.gca().invert_yaxis()  <span class="co"># Invert y-axis to have the most important feature at the top</span></span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>    plt.savefig(<span class="ss">f'../../results/output/variable_importance/</span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss">.png'</span>)</span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting feature importance for XGBoost</span></span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>plot_feature_importance(xgboost_feature_importance.head(<span class="dv">10</span>), <span class="st">'XGBoost'</span>)</span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting feature importance for HistGradientBoostingRegressor (Permutation Importance)</span></span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>plot_feature_importance(hist_gb_feature_importance.head(<span class="dv">10</span>), <span class="st">'HistGradientBoostingRegressor (Permutation Importance)'</span>)</span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting feature importance for HistGradientBoostingRegressor (Permutation Importance)</span></span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>plot_feature_importance(rand_for_feature_importance.head(<span class="dv">10</span>), <span class="st">'Random Forest Regressor'</span>)</span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting feature importance for HistGradientBoostingRegressor (Permutation Importance)</span></span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>plot_feature_importance(dec_tree_feature_importance.head(<span class="dv">10</span>), <span class="st">'Decision Tree Regressor'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting function</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_feature_importance(importances, model_name):</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>    plt.barh(importances[<span class="st">'Feature'</span>], importances[<span class="st">'Importance'</span>], color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'Importance'</span>)</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Feature'</span>)</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f'Feature Importance - </span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>    plt.gca().invert_yaxis()  <span class="co"># Invert y-axis to have the most important feature at the top</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>    plt.savefig(<span class="ss">f'../../results/output/variable_importance/</span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss">.png'</span>)</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting feature importance for XGBoost</span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>plot_feature_importance(xgboost_feature_importance.head(<span class="dv">10</span>), <span class="st">'XGBoost'</span>)</span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting feature importance for HistGradientBoostingRegressor (Permutation Importance)</span></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>plot_feature_importance(hist_gb_feature_importance.head(<span class="dv">10</span>), <span class="st">'HistGradientBoostingRegressor (Permutation Importance)'</span>)</span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting feature importance for HistGradientBoostingRegressor (Permutation Importance)</span></span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>plot_feature_importance(rand_for_feature_importance.head(<span class="dv">10</span>), <span class="st">'Random Forest Regressor'</span>)</span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting feature importance for HistGradientBoostingRegressor (Permutation Importance)</span></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>plot_feature_importance(dec_tree_feature_importance.head(<span class="dv">10</span>), <span class="st">'Decision Tree Regressor'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Top 10 Important Features from XGBoost:
                                               Feature  Importance
@@ -487,20 +478,19 @@ Top 10 Important Features from Random Forest:
 28      Self-employed (Keogh) retirement plans amount    0.048481
 30  Individual retirement arrangement payments amount    0.042663
 41                 Home mortgage interest paid amount    0.038645
-40                      Limited state and local taxes    0.033366
-['Self-employed health insurance deduction amount', 'Individual retirement arrangement payments amount', 'Home mortgage from personal seller amount', 'Salaries and wages amount', 'Home mortgage interest paid amount', 'Self-employment tax amount', 'Self-employed (Keogh) retirement plans amount', 'Business or professional net income (less loss) amount', 'Real estate taxes amount', 'Net premium tax credit amount']</code></pre>
+40                      Limited state and local taxes    0.033366</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="statistical_analysis_files/figure-html/cell-4-output-2.png" width="1428" height="950"></p>
+<p><img src="statistical_analysis_files/figure-html/cell-4-output-2.png" width="948" height="470"></p>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="statistical_analysis_files/figure-html/cell-4-output-3.png" width="1426" height="950"></p>
+<p><img src="statistical_analysis_files/figure-html/cell-4-output-3.png" width="992" height="470"></p>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="statistical_analysis_files/figure-html/cell-4-output-4.png" width="1426" height="950"></p>
+<p><img src="statistical_analysis_files/figure-html/cell-4-output-4.png" width="946" height="470"></p>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="statistical_analysis_files/figure-html/cell-4-output-5.png" width="1426" height="950"></p>
+<p><img src="statistical_analysis_files/figure-html/cell-4-output-5.png" width="946" height="470"></p>
 </div>
 </div>
 </section>
@@ -548,8 +538,12 @@ Top 10 Important Features from Random Forest:
 <span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>model_comparison_metrics_df <span class="op">=</span> compare_model_metrics(models_to_compare, X_train_transformed, y_train_grouped, X_test_transformed, y_test_grouped)</span>
 <span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the comparison results</span></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model_comparison_metrics_df)</span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>model_comparison_metrics_df.to_csv(<span class="st">'../../results/output/model_comparison.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>model_comparison_metrics_df.to_csv(<span class="st">'../../results/output/model_comparison.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="model-comparison-results" class="level3">
+<h3 class="anchored" data-anchor-id="model-comparison-results">Model Comparison Results</h3>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model_comparison_metrics_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                            Model       RMSE  R-squared        MAE  \
 0               XGBoost_Regressor  69.214073   0.892063  32.473010   
@@ -565,99 +559,100 @@ Top 10 Important Features from Random Forest:
 </div>
 </div>
 </section>
+</section>
 <section id="visualize-model-comparison" class="level2">
 <h2 class="anchored" data-anchor-id="visualize-model-comparison">Visualize Model Comparison</h2>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to visualize the model performance differences</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_model_performance_comparison(df, metric):</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    df_sorted <span class="op">=</span> df.sort_values(by<span class="op">=</span>metric, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    plt.barh(df_sorted[<span class="st">'Model'</span>], df_sorted[metric], color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(metric)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Model'</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f'Model Comparison by </span><span class="sc">{</span>metric<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    plt.gca().invert_yaxis()  <span class="co"># Invert y-axis to have the best performing model on top</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    plt.savefig(<span class="ss">f'../../results/output/model_comparison/</span><span class="sc">{</span>metric<span class="sc">}</span><span class="ss">.png'</span>)</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize RMSE comparison</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>plot_model_performance_comparison(model_comparison_metrics_df, <span class="st">'RMSE'</span>)</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize R-squared comparison</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>plot_model_performance_comparison(model_comparison_metrics_df, <span class="st">'R-squared'</span>)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize MAE comparison</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>plot_model_performance_comparison(model_comparison_metrics_df, <span class="st">'MAE'</span>)</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize MSE comparison</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>plot_model_performance_comparison(model_comparison_metrics_df, <span class="st">'MSE'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to visualize the model performance differences</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_model_performance_comparison(df, metric):</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    df_sorted <span class="op">=</span> df.sort_values(by<span class="op">=</span>metric, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    plt.barh(df_sorted[<span class="st">'Model'</span>], df_sorted[metric], color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(metric)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Model'</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f'Model Comparison by </span><span class="sc">{</span>metric<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    plt.gca().invert_yaxis()  <span class="co"># Invert y-axis to have the best performing model on top</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    plt.savefig(<span class="ss">f'../../results/output/model_comparison/</span><span class="sc">{</span>metric<span class="sc">}</span><span class="ss">.png'</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize RMSE comparison</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>plot_model_performance_comparison(model_comparison_metrics_df, <span class="st">'RMSE'</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize R-squared comparison</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>plot_model_performance_comparison(model_comparison_metrics_df, <span class="st">'R-squared'</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize MAE comparison</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>plot_model_performance_comparison(model_comparison_metrics_df, <span class="st">'MAE'</span>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize MSE comparison</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>plot_model_performance_comparison(model_comparison_metrics_df, <span class="st">'MSE'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="statistical_analysis_files/figure-html/cell-6-output-1.png" width="1006" height="523"></p>
+<p><img src="statistical_analysis_files/figure-html/cell-7-output-1.png" width="1006" height="523"></p>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="statistical_analysis_files/figure-html/cell-6-output-2.png" width="1006" height="523"></p>
+<p><img src="statistical_analysis_files/figure-html/cell-7-output-2.png" width="1006" height="523"></p>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="statistical_analysis_files/figure-html/cell-6-output-3.png" width="1006" height="523"></p>
+<p><img src="statistical_analysis_files/figure-html/cell-7-output-3.png" width="1006" height="523"></p>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="statistical_analysis_files/figure-html/cell-6-output-4.png" width="1006" height="523"></p>
+<p><img src="statistical_analysis_files/figure-html/cell-7-output-4.png" width="1006" height="523"></p>
 </div>
 </div>
 </section>
 <section id="create-coefficients-dataframe" class="level2">
 <h2 class="anchored" data-anchor-id="create-coefficients-dataframe">Create Coefficients DataFrame</h2>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import necessary libraries</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to extract model coefficients and intercepts</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_model_coefficients_and_intercepts(model, model_name, feature_names):</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">hasattr</span>(model, <span class="st">'coef_'</span>):</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Linear models and similar that have a coef_ attribute</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        coefficients <span class="op">=</span> model.coef_</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="bu">hasattr</span>(model, <span class="st">'feature_importances_'</span>):</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Tree-based models with feature_importances_ attribute</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        coefficients <span class="op">=</span> model.feature_importances_</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        coefficients <span class="op">=</span> np.nan  <span class="co"># Placeholder for models without accessible coefficients</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    coefficients_df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Feature'</span>: feature_names,</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Coefficient'</span>: coefficients,</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Model'</span>: model_name</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.concat([coefficients_df], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Get feature names</span></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>feature_names <span class="op">=</span> X_train_transformed.columns</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize models (assuming they are already trained)</span></span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> {</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">'XGBoost_Regressor'</span>: xgboost_model,</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Decision_Tree_Regressor'</span>: dec_tree_model,</span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">'HistGradientBoosting_Regressor'</span>: hist_gb_model,</span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Random_Forest_Regressor'</span>: rand_for_model,</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect coefficients for each model</span></span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>coefficients_with_intercepts_list <span class="op">=</span> []</span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> model_name, model <span class="kw">in</span> models.items():</span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    coefficients_with_intercepts_list.append(get_model_coefficients_and_intercepts(model, model_name, feature_names))</span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all coefficients into one DataFrame</span></span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>coefficients_df <span class="op">=</span> pd.concat(coefficients_with_intercepts_list, ignore_index<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the coefficients DataFrame</span></span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>coefficients_df <span class="op">=</span> coefficients_df.dropna()</span>
-<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>coefficients_df.to_csv(<span class="st">'../../results/output/model_coefficients.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import necessary libraries</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to extract model coefficients and intercepts</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_model_coefficients_and_intercepts(model, model_name, feature_names):</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">hasattr</span>(model, <span class="st">'coef_'</span>):</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Linear models and similar that have a coef_ attribute</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        coefficients <span class="op">=</span> model.coef_</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="bu">hasattr</span>(model, <span class="st">'feature_importances_'</span>):</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Tree-based models with feature_importances_ attribute</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        coefficients <span class="op">=</span> model.feature_importances_</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        coefficients <span class="op">=</span> np.nan  <span class="co"># Placeholder for models without accessible coefficients</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    coefficients_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Feature'</span>: feature_names,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Coefficient'</span>: coefficients,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Model'</span>: model_name</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.concat([coefficients_df], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Get feature names</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>feature_names <span class="op">=</span> X_train_transformed.columns</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize models (assuming they are already trained)</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> {</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">'XGBoost_Regressor'</span>: xgboost_model,</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Decision_Tree_Regressor'</span>: dec_tree_model,</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">'HistGradientBoosting_Regressor'</span>: hist_gb_model,</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Random_Forest_Regressor'</span>: rand_for_model,</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect coefficients for each model</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>coefficients_with_intercepts_list <span class="op">=</span> []</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> model_name, model <span class="kw">in</span> models.items():</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>    coefficients_with_intercepts_list.append(get_model_coefficients_and_intercepts(model, model_name, feature_names))</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all coefficients into one DataFrame</span></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>coefficients_df <span class="op">=</span> pd.concat(coefficients_with_intercepts_list, ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the coefficients DataFrame</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>coefficients_df <span class="op">=</span> coefficients_df.dropna()</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>coefficients_df.to_csv(<span class="st">'../../results/output/model_coefficients.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

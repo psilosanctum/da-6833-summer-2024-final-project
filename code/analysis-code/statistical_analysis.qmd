@@ -1,6 +1,5 @@
 ---
 title: "Statistical Analysis"
-date: today
 output: html_document
 execute: 
   error: False
@@ -209,12 +208,9 @@ print(dec_tree_feature_importance.head(10))
 print("\nTop 10 Important Features from Random Forest:")
 print(rand_for_feature_importance.head(10))
 
-rand_for_feature_importance_list = xgboost_feature_importance['Feature'].head(10).tolist()
-print(rand_for_feature_importance_list)
-
 # Plotting function
 def plot_feature_importance(importances, model_name):
-    plt.figure(figsize=(15, 10))
+    plt.figure(figsize=(10, 5))
     plt.barh(importances['Feature'], importances['Importance'], color='skyblue')
     plt.xlabel('Importance')
     plt.ylabel('Feature')
@@ -223,6 +219,7 @@ def plot_feature_importance(importances, model_name):
     plt.grid(True)
     plt.tight_layout()
     plt.savefig(f'../../results/output/variable_importance/{model_name}.png')
+    plt.show()
 
 
 # Plotting feature importance for XGBoost
@@ -282,9 +279,12 @@ models_to_compare = {
 model_comparison_metrics_df = compare_model_metrics(models_to_compare, X_train_transformed, y_train_grouped, X_test_transformed, y_test_grouped)
 
 # Display the comparison results
-print(model_comparison_metrics_df)
 model_comparison_metrics_df.to_csv('../../results/output/model_comparison.csv', index=False)
+```
 
+### Model Comparison Results
+```{python}
+print(model_comparison_metrics_df)
 ```
 
 ## Visualize Model Comparison

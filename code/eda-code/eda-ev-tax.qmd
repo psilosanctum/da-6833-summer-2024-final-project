@@ -1,6 +1,5 @@
 ---
 title: "Log-Transform Predictors"
-date: today
 output: html_document
 execute: 
   error: False
@@ -8,11 +7,10 @@ execute:
 ---
 **Electric Vehicle Data Analysis**
 
-# Introduction
-Apply log transformation to our feature
+## Introduction
+Create scatterplots to see the relationship between the independent variable and predictors. Perform a log transformation on features to normalize and compare original to transformed distribution.
 
-# Setup
-
+## Import Libraries & Data, Create Train/Test Datasets
 ```{python}
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -65,10 +63,9 @@ y_grouped = merged_data['Vehicle Count']
 # Splitting the data into training and testing sets
 X_train_grouped, X_test_grouped, y_train_grouped, y_test_grouped = train_test_split(
     X_grouped, y_grouped, test_size=0.2, random_state=42)
-
-merged_data.to_csv('test.csv', index=False)
 ```
-<!-- 
+
+## Scatterplot Relationship - Predictor vs. Independent Variable
 ```{python}
 import matplotlib.pyplot as plt
 
@@ -79,11 +76,11 @@ for i, feature in enumerate(features_to_use):
     plt.title(f'{feature} vs. Vehicle Count Relationship')
     plt.xlabel(feature)
     plt.ylabel('Vehicle Count')
-    # plt.grid(True)
     plt.savefig(f'../../results/figures/scatterplots/{feature}_scatterplot.png')
-
+    plt.show()
 ```
 
+## Histogram Distributions
 ```{python}
 import numpy as np
 import pandas as pd
@@ -116,17 +113,18 @@ def plot_transformed_feature_histograms(data, data1):
         ax2 = plt.subplot(2,1,2)
         ax2 = sns.histplot(data1[feature], kde=True, bins=50)
         ax1.title.set_text(f'Original vs. Log-Transformed: {feature}')
-        # ax2.title.set_text(f'Log-Transformed Histogram of {feature}')
         plt.xlabel(feature)
         plt.ylabel('Frequency')
         plt.grid(True)
+        plt.tight_layout()
         plt.savefig(f'../../results/figures/histograms/{feature}_histogram.png')
+        plt.show()
 
 # Plot the histograms for the log-transformed features
 plot_transformed_feature_histograms(X_grouped, X_transformed)
 ```
 
-
+## Boxplot Distributions
 ```{python}
 # Plot boxplot for each feature in the transformed dataset
 def plot_transformed_feature_boxplots(data, data1):
@@ -138,13 +136,13 @@ def plot_transformed_feature_boxplots(data, data1):
         ax2 = plt.subplot(2,1,2)
         ax2 = sns.boxplot(data1[feature])
         ax1.title.set_text(f'Original vs. Log-Transformed Boxplot of {feature}')
-        # ax2.title.set_text(f'Log-Transformed Boxplot of {feature}')
         plt.xlabel(feature)
         plt.ylabel('Frequency')
         plt.grid(True)
         plt.tight_layout()
         plt.savefig(f'../../results/figures/boxplots/{feature}_boxplot.png')
+        plt.show()
 
 # Plot the boxplots for the log-transformed features
 plot_transformed_feature_boxplots(X_grouped, X_transformed)
-``` -->
+```

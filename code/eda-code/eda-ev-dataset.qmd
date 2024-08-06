@@ -1,3 +1,11 @@
+---
+title: "EV Exploratory Analysis"
+output: html_document
+execute: 
+  error: False
+  warning: False
+---
+
 ```{r}
 library(readxl) #for loading Excel files
 library(readr)

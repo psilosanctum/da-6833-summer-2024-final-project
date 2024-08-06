@@ -8,7 +8,7 @@
 
 <meta name="author" content="Sri Lakshmi Chundru, Collin Real, Joaquin Ramirez, Seth Harris">
 
-<title>Predicting Electric Vehicle Count w/ IRS Data - Using IRS Data to Predict Electric Vehicle Count</title>
+<title>EV Predictive Modeling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -92,7 +92,7 @@ div.csl-indent {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Predicting Electric Vehicle Count w/ IRS Data</span>
+    <span class="navbar-title">EV Predictive Modeling</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -152,7 +152,8 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Using IRS Data to Predict Electric Vehicle Count</h1>
+<h1 class="title">EV Predictive Modeling</h1>
+<p class="subtitle lead">IRS Tax Data - Zip Code</p>
 </div>
 
 
@@ -291,16 +292,16 @@ div.csl-indent {
 </figure>
 </div>
 <ol type="1">
-<li><p>Self-Employed Health Insurance Deduction Amount This feature represents the amount self-employed individuals can deduct for health insurance premiums. It is significant as it indicates the presence and financial activities of self-employed individuals within a zip code. Self-employed individuals often have variable incomes and unique financial situations, which may influence their ability to purchase and maintain vehicles. This deduction could correlate with areas where self-employment is prevalent, possibly reflecting regions with more entrepreneurial activity and, potentially, higher disposable incomes.</p></li>
+<li><p>Self-Employed Health Insurance Deduction Amount: This feature represents the amount self-employed individuals can deduct for health insurance premiums. It is significant as it indicates the presence and financial activities of self-employed individuals within a zip code. Self-employed individuals often have variable incomes and unique financial situations, which may influence their ability to purchase and maintain vehicles. This deduction could correlate with areas where self-employment is prevalent, possibly reflecting regions with more entrepreneurial activity and, potentially, higher disposable incomes.</p></li>
 <li><p>Individual Retirement Arrangement Payments Amount Contributions to Individual Retirement Arrangements (IRAs) reflect financial planning and savings behavior. Higher contributions suggest higher disposable income and financial stability, factors that are positively associated with the ability to purchase vehicles, including more expensive options like EVs. This feature indicates regions where residents prioritize long-term financial health, which may correlate with the capacity to invest in newer, environmentally friendly technologies.</p></li>
-<li><p>Home Mortgage from Personal Seller Amount This feature involves transactions where the home mortgage is obtained directly from a personal seller rather than a traditional financial institution. It indicates non-standard financial arrangements, possibly reflecting unique housing markets or economic conditions in certain areas. The relevance of this feature could be tied to the accessibility and flexibility in financial transactions within these regions, potentially influencing overall economic activity, including vehicle purchases.</p></li>
-<li><p>Salaries and Wages Amount A direct indicator of income, this feature represents the total salaries and wages reported within a zip code. It is a critical predictor as higher salaries and wages generally correlate with greater financial capacity to purchase and maintain vehicles. This feature strongly influences vehicle ownership levels, including the adoption of EVs, which may have higher upfront costs but offer long-term savings.</p></li>
-<li><p>Home Mortgage Interest Paid Amount The amount of interest paid on home mortgages is indicative of both property ownership and the financial burden of maintaining such properties. Higher mortgage interest payments suggest higher home values and, by extension, potentially higher wealth levels. This wealth is a significant factor in vehicle ownership, as individuals with more expensive homes often have higher disposable incomes, enabling them to invest in additional vehicles or more luxurious options, including EVs.</p></li>
-<li><p>Self-Employment Tax Amount This feature captures the amount of self-employment tax paid, which directly correlates with self-employment income. Higher self-employment tax payments indicate successful businesses or high-earning self-employed individuals. The economic health of these individuals likely contributes to their ability to afford vehicles, making this a significant predictor of vehicle counts.</p></li>
+<li><p>Home Mortgage from Personal Seller Amount: This feature involves transactions where the home mortgage is obtained directly from a personal seller rather than a traditional financial institution. It indicates non-standard financial arrangements, possibly reflecting unique housing markets or economic conditions in certain areas. The relevance of this feature could be tied to the accessibility and flexibility in financial transactions within these regions, potentially influencing overall economic activity, including vehicle purchases.</p></li>
+<li><p>Salaries and Wages Amount: A direct indicator of income, this feature represents the total salaries and wages reported within a zip code. It is a critical predictor as higher salaries and wages generally correlate with greater financial capacity to purchase and maintain vehicles. This feature strongly influences vehicle ownership levels, including the adoption of EVs, which may have higher upfront costs but offer long-term savings.</p></li>
+<li><p>Home Mortgage Interest Paid Amount: The amount of interest paid on home mortgages is indicative of both property ownership and the financial burden of maintaining such properties. Higher mortgage interest payments suggest higher home values and, by extension, potentially higher wealth levels. This wealth is a significant factor in vehicle ownership, as individuals with more expensive homes often have higher disposable incomes, enabling them to invest in additional vehicles or more luxurious options, including EVs.</p></li>
+<li><p>Self-Employment Tax Amount: This feature captures the amount of self-employment tax paid, which directly correlates with self-employment income. Higher self-employment tax payments indicate successful businesses or high-earning self-employed individuals. The economic health of these individuals likely contributes to their ability to afford vehicles, making this a significant predictor of vehicle counts.</p></li>
 <li><p>Self-Employed (Keogh) Retirement Plans Amount Contributions to Keogh plans reflect savings set aside by self-employed individuals for retirement. Like IRA contributions, this feature suggests a focus on long-term financial security, indicative of higher income levels and financial planning. This financial stability is associated with greater capacity for discretionary spending, including vehicle purchases.</p></li>
-<li><p>Business or Professional Net Income (Less Loss) Amount This feature represents the net income from business or professional activities, after accounting for losses. It is a measure of the economic success and profitability of businesses within a zip code. Higher net incomes suggest prosperous business environments, which can lead to increased vehicle ownership among business owners and employees, reflecting economic prosperity in these areas.</p></li>
-<li><p>Real Estate Taxes Amount Real estate taxes are directly linked to property values and indirectly to wealth. Higher real estate taxes generally indicate more expensive properties, suggesting higher overall wealth in an area. Wealthier populations have greater access to credit and financing options, which can increase the likelihood of purchasing vehicles, including newer and more expensive models like EVs.</p></li>
-<li><p>Net Premium Tax Credit Amount The net premium tax credit amount provides a tax credit under the Affordable Care Act, generally aimed at reducing the cost of health insurance for lower to middle-income families. While it may seem counterintuitive, this feature could correlate with regions where financial assistance is necessary, reflecting economic diversity. In these areas, the adoption of vehicles, including EVs, may be influenced by financial incentives or subsidies aimed at promoting energy-efficient technologies.</p></li>
+<li><p>Business or Professional Net Income (Less Loss) Amount: This feature represents the net income from business or professional activities, after accounting for losses. It is a measure of the economic success and profitability of businesses within a zip code. Higher net incomes suggest prosperous business environments, which can lead to increased vehicle ownership among business owners and employees, reflecting economic prosperity in these areas.</p></li>
+<li><p>Real Estate Taxes Amount: Real estate taxes are directly linked to property values and indirectly to wealth. Higher real estate taxes generally indicate more expensive properties, suggesting higher overall wealth in an area. Wealthier populations have greater access to credit and financing options, which can increase the likelihood of purchasing vehicles, including newer and more expensive models like EVs.</p></li>
+<li><p>Net Premium Tax Credit Amount: The net premium tax credit amount provides a tax credit under the Affordable Care Act, generally aimed at reducing the cost of health insurance for lower to middle-income families. While it may seem counterintuitive, this feature could correlate with regions where financial assistance is necessary, reflecting economic diversity. In these areas, the adoption of vehicles, including EVs, may be influenced by financial incentives or subsidies aimed at promoting energy-efficient technologies.</p></li>
 </ol>
 </section>
 <section id="conclusion" class="level2">

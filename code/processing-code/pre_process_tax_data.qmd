@@ -1,6 +1,5 @@
 ---
 title: "Pre-Process Tax Data"
-date: today
 output: html_document
 execute: 
   error: False

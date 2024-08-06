@@ -1,5 +1,6 @@
 ---
-title: "Using IRS Data to Predict Electric Vehicle Count"
+title: "EV Predictive Modeling"
+subtitle: "IRS Tax Data - Zip Code"
 author: Sri Lakshmi Chundru, Collin Real, Joaquin Ramirez, Seth Harris
 bibliography: assets/dataanalysis-references.bib
 csl: assets/apa.csl
@@ -88,34 +89,32 @@ The top 10 features identified as the most significant predictors of vehicle cou
 ## Variable Importance - XGBoost
 !['XGBoost'](results/output/variable_importance/XGBoost.png)
 
-1. Self-Employed Health Insurance Deduction Amount
+1. Self-Employed Health Insurance Deduction Amount:
 This feature represents the amount self-employed individuals can deduct for health insurance premiums. It is significant as it indicates the presence and financial activities of self-employed individuals within a zip code. Self-employed individuals often have variable incomes and unique financial situations, which may influence their ability to purchase and maintain vehicles. This deduction could correlate with areas where self-employment is prevalent, possibly reflecting regions with more entrepreneurial activity and, potentially, higher disposable incomes.
 
-2. Individual Retirement Arrangement Payments Amount
-Contributions to Individual Retirement Arrangements (IRAs) reflect financial planning and savings behavior. Higher contributions suggest higher disposable income and financial stability, factors that are positively associated with the ability to purchase vehicles, including more expensive options like EVs. This feature indicates regions where residents prioritize long-term financial health, which may correlate with the capacity to invest in newer, environmentally friendly technologies.
+2. Individual Retirement Arrangement Payments Amount Contributions to Individual Retirement Arrangements (IRAs) reflect financial planning and savings behavior. Higher contributions suggest higher disposable income and financial stability, factors that are positively associated with the ability to purchase vehicles, including more expensive options like EVs. This feature indicates regions where residents prioritize long-term financial health, which may correlate with the capacity to invest in newer, environmentally friendly technologies.
 
-3. Home Mortgage from Personal Seller Amount
+3. Home Mortgage from Personal Seller Amount:
 This feature involves transactions where the home mortgage is obtained directly from a personal seller rather than a traditional financial institution. It indicates non-standard financial arrangements, possibly reflecting unique housing markets or economic conditions in certain areas. The relevance of this feature could be tied to the accessibility and flexibility in financial transactions within these regions, potentially influencing overall economic activity, including vehicle purchases.
 
-4. Salaries and Wages Amount
+4. Salaries and Wages Amount:
 A direct indicator of income, this feature represents the total salaries and wages reported within a zip code. It is a critical predictor as higher salaries and wages generally correlate with greater financial capacity to purchase and maintain vehicles. This feature strongly influences vehicle ownership levels, including the adoption of EVs, which may have higher upfront costs but offer long-term savings.
 
-5. Home Mortgage Interest Paid Amount
+5. Home Mortgage Interest Paid Amount:
 The amount of interest paid on home mortgages is indicative of both property ownership and the financial burden of maintaining such properties. Higher mortgage interest payments suggest higher home values and, by extension, potentially higher wealth levels. This wealth is a significant factor in vehicle ownership, as individuals with more expensive homes often have higher disposable incomes, enabling them to invest in additional vehicles or more luxurious options, including EVs.
 
-6. Self-Employment Tax Amount
+6. Self-Employment Tax Amount:
 This feature captures the amount of self-employment tax paid, which directly correlates with self-employment income. Higher self-employment tax payments indicate successful businesses or high-earning self-employed individuals. The economic health of these individuals likely contributes to their ability to afford vehicles, making this a significant predictor of vehicle counts.
 
-7. Self-Employed (Keogh) Retirement Plans Amount
-Contributions to Keogh plans reflect savings set aside by self-employed individuals for retirement. Like IRA contributions, this feature suggests a focus on long-term financial security, indicative of higher income levels and financial planning. This financial stability is associated with greater capacity for discretionary spending, including vehicle purchases.
+7. Self-Employed (Keogh) Retirement Plans Amount Contributions to Keogh plans reflect savings set aside by self-employed individuals for retirement. Like IRA contributions, this feature suggests a focus on long-term financial security, indicative of higher income levels and financial planning. This financial stability is associated with greater capacity for discretionary spending, including vehicle purchases.
 
-8. Business or Professional Net Income (Less Loss) Amount
+8. Business or Professional Net Income (Less Loss) Amount:
 This feature represents the net income from business or professional activities, after accounting for losses. It is a measure of the economic success and profitability of businesses within a zip code. Higher net incomes suggest prosperous business environments, which can lead to increased vehicle ownership among business owners and employees, reflecting economic prosperity in these areas.
 
-9. Real Estate Taxes Amount
+9. Real Estate Taxes Amount:
 Real estate taxes are directly linked to property values and indirectly to wealth. Higher real estate taxes generally indicate more expensive properties, suggesting higher overall wealth in an area. Wealthier populations have greater access to credit and financing options, which can increase the likelihood of purchasing vehicles, including newer and more expensive models like EVs.
 
-10. Net Premium Tax Credit Amount
+10. Net Premium Tax Credit Amount:
 The net premium tax credit amount provides a tax credit under the Affordable Care Act, generally aimed at reducing the cost of health insurance for lower to middle-income families. While it may seem counterintuitive, this feature could correlate with regions where financial assistance is necessary, reflecting economic diversity. In these areas, the adoption of vehicles, including EVs, may be influenced by financial incentives or subsidies aimed at promoting energy-efficient technologies.
 
 ## Conclusion
