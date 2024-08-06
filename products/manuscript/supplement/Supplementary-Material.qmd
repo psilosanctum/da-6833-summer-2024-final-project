@@ -46,7 +46,7 @@ A histogram-based implementation of gradient boosting that is particularly effic
 
 # Additional results
 ## Log-Transformed Histogram Examples
-![Individual Retirement Payments](../../../results/figures/scatterplots/Individual%20retirement%20arrangement%20payments%20amount_scatterplot.png)
+![Individual Retirement Payments](../../../results/figures/histograms/Individual%20retirement%20arrangement%20payments%20amount_histogram.png)
 
 ![Salary & Wages Amount](../../../results/figures/histograms/Salaries%20and%20wages%20amount_histogram.png)
 
