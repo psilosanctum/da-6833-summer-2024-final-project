@@ -3,9 +3,9 @@
 ## Overview
 1) Pre-Processing File (Quarto): /code/processing-code/pre_process_tax_data.qmd
 
-2) Exploratory Data Analysis (Quarto):
-  - /code/eda-code/eda-ev-dataset.qnd
-  - /code/eda-code/eda-ev-tax.qmd
+2) Exploratory Data Analysis (Quarto): <br/>
+/code/eda-code/eda-ev-dataset.qmd <br/>
+/code/eda-code/eda-ev-tax.qmd <br/>
 
 3) Main code file (Quarto): /code/analysis-code/statistical_analysis.qmd done with Python/Quarto/Github. 
 
