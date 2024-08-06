@@ -39,3 +39,5 @@ results/large-files/*
 
 # Environments
 .venv/
+
+/.quarto/

@@ -1,5 +1,5 @@
 ---
-title: "EV Exploratory Data Analysis"
+title: "Log-Transform Predictors"
 date: today
 output: html_document
 execute: 
@@ -8,10 +8,8 @@ execute:
 ---
 **Electric Vehicle Data Analysis**
 
-# Introduction:
-
-This document is an exploratory data analysis of electric vehicle data. The data was obtained from the IRS and contains information on electric vehicles, their owners, and the tax benefits they receive. The data was cleaned and processed in R and saved as a CSV file. This document will load the data, explore it, and fit a linear regression model to predict the number of electric vehicles in a given zip code.
-
+# Introduction
+Apply log transformation to our feature
 
 # Setup
 
@@ -70,7 +68,7 @@ X_train_grouped, X_test_grouped, y_train_grouped, y_test_grouped = train_test_sp
 
 merged_data.to_csv('test.csv', index=False)
 ```
-
+<!-- 
 ```{python}
 import matplotlib.pyplot as plt
 
@@ -78,7 +76,7 @@ import matplotlib.pyplot as plt
 for i, feature in enumerate(features_to_use):
     plt.figure(figsize=(10,5))
     plt.scatter(X_grouped[feature], y_grouped, c="lightblue", edgecolors="blue")
-    plt.title(f'{feature} vs Vehicle Count')
+    plt.title(f'{feature} vs. Vehicle Count Relationship')
     plt.xlabel(feature)
     plt.ylabel('Vehicle Count')
     # plt.grid(True)
@@ -149,4 +147,4 @@ def plot_transformed_feature_boxplots(data, data1):
 
 # Plot the boxplots for the log-transformed features
 plot_transformed_feature_boxplots(X_grouped, X_transformed)
-```
+``` -->

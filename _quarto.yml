@@ -1,0 +1,32 @@
+project: 
+  type: website
+  output-dir: docs
+
+website:
+  title: "EV Predictive Modeling"
+  navbar:
+    left:
+      - text: "Report"
+        file: index.qmd
+      - text: "Analysis"
+        menu:
+          - text: "Preprocess Tax + EV Data"
+            file: code/processing-code/pre_process_tax_data.qmd
+          - text: "EV Exploratory Analysis"
+            file: code/eda-code/eda-ev-dataset.qmd
+          - text: "Log Transform Predictors"
+            file: code/eda-code/eda-ev-tax.qmd
+          - text: "Predictive Models"
+            file: code/analysis-code/statistical_analysis.qmd
+    right:
+      - icon: github 
+        href: https://psilosanctum.github.io/da-6833-summer-2024-final-project/     
+
+format:
+  html:
+    theme: cyborg
+    highlight: zenburn
+    css: styles.css
+    toc: false
+
+

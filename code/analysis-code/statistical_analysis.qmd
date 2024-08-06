@@ -45,7 +45,6 @@ grouped_data = data.groupby('ZIPCODE')['Vehicle Count'].sum().reset_index()
 
 # Selecting columns L to CY (indexes 11 to 102)
 features_to_use = data.columns[3:-1]
-print(features_to_use)
 
 # Ensuring correct selection of numeric columns
 numeric_features_to_use = data[features_to_use].select_dtypes(include=['number']).columns
@@ -60,10 +59,9 @@ merged_data = grouped_data.merge(grouped_features, on='ZIPCODE')
 X_grouped = merged_data[numeric_features_to_use]
 y_grouped = merged_data['Vehicle Count']
 
+# Scale data
 scalar = StandardScaler()
 scale = scalar.fit_transform(X_grouped)
-print(scale)
-
 
 # Splitting the data into training and testing sets
 X_train_grouped, X_test_grouped, y_train_grouped, y_test_grouped = train_test_split(

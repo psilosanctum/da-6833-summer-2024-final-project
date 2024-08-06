@@ -10,10 +10,8 @@ library(ggplot2)
 library(tidycensus)
 ```
 
-
-```{r}
-getwd()
-```
+# Introduction
+This document is an exploratory data analysis of electric vehicle data. The data was obtained from the IRS and contains information on electric vehicles, their owners, and the tax benefits they receive. The data was cleaned and processed in R and saved as a CSV file. This document will load the data, explore it, and fit a linear regression model to predict the number of electric vehicles in a given zip code.
 
 ```{r}
 # Import Data, Check Descriptive Statistics & Data Types
@@ -40,7 +38,6 @@ print(paste0('Total Missing MSRP Prices: ', count_zero_msrp))
 print(paste0('Total Price Data Points: ', total_price_data_points))
 ```
 
-
 ```{r}
 # Checking for Null values:
 total_na <- sum(is.na(ev_data))
@@ -57,7 +54,6 @@ max_msrp_outlier
 filter_msrp_outlier <- ev_data_filtered %>%
   filter(Base.MSRP != 845000) %>%
   filter(Base.MSRP != 0)
-filter_msrp_outlier
 ```
 
 ```{r}
@@ -119,36 +115,5 @@ plot(p_scatterplot)
 # Save the scatterplot to a file
 # ggsave("scatterplot.png", plot = p_scatterplot)
 ```
-
-
-``` {r}
-# Create a scatterplot - price vs. electric vehicle range correlation
-
-p_scatterplot<-ggplot(filter_msrp_outlier, aes(x = Electric.Range, y = Base.MSRP)) +
-  geom_point() +
-  labs(title = "Scatterplot - Price vs. Range Correlation",
-       x = "Vehicle Range",
-       y = "MSRP")
-plot(p_scatterplot)
-```
-
-```{r}
-#For Electric.Range:
-Q1 <- quantile(ev_data_filtered$Electric.Range , 0.25, na.rm = TRUE) # First Quartile
-Q3 <- quantile(ev_data_filtered$Electric.Range , 0.75, na.rm = TRUE) # Third Quartile
-IQR <- Q3 - Q1 # Compute Interquartile Range
-lower_bound <- Q1 - 1.5 * IQR # Compute Lower Bound based on IQR
-upper_bound <- Q3 + 1.5 * IQR # Compute Upper Bound based on IQR
-upper_bound
-```
-
-
-```{r}
-# Filter out outliers:
-ev_data_Filtered_2 <- ev_data_filtered[ev_data_filtered$Electric.Range > lower_bound & ev_data_filtered$Electric.Range < upper_bound, ]
-ev_data_Filtered_2
-```
-
-
 
 
