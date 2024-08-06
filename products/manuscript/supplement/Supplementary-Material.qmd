@@ -1,100 +1,77 @@
 ---
 title: "Supplement to Example Manuscript Template for a Data Analysis Project"
 subtitle: ""
-author: Andreas Handel
-date: "`r Sys.Date()`"
+author: Sri Lakshmi Chundru, Collin Real, Joaquin Ramirez, Seth Harris
 format:
-  pdf:
+  docx:
     toc: false
     number-sections: true
     highlight-style: github
-#bibliography: ../../../assets/dataanalysis-references.bib
-csl: ../../../assets/vancouver.csl
+# bibliography: ../../assets/dataanalysis-references.bib
+# csl: ../../assets/apa.csl
 ---
-
-
-```{r, echo=FALSE, message=FALSE}
-# load a few R packages
-library(here)
-library(knitr)
-```
-
-
-
-
-This shows some materials that could go into a supplementary file. Often you want/need references here too. You can use the same reference bib file for this and the main text (as done here) or have separate bib files.
-
-For illustrative purposes, I'm doing the supplement as pdf. For this to work, you need a (La)TeX system installed. It's easy. Just follow [these steps](https://quarto.org/docs/output-formats/pdf-basics.html).
-
-Of course you would choose the format based on needs.
-
-I'm also using a different style for the references here. (vancouver vs apa in the main manuscript). Usually one would have the formatting of the references the same in those two documents, but I want to illustrate how easy it is to switch reference formatting styles, you just need to get the right CSL file and specify it in the YAML header. We could also have a seperate reference bibtext (`.bib`) file, but here we are using the same.
 
 # Overview
 
-A quick overview of what readers can find in the supplement.
+An overview of the correct process to generate the final outputs as well as some exploratory analysis.
 
 
-# Code and file information
+# Code Information
 
-Explain here what each code/file is and does, and in which order (if any) users need to run thing to reproduce everything.
-Essentially, give a full set of instructions to re-generate everything.
+**Run analysis in the following order.**
 
+1. Pre-Processing File (Quarto): <br/>
+/code/processing-code/pre_process_tax_data.qmd - preprocesses the tax/ev data and merges them into one dataset.
 
-{{< pagebreak >}}
+2. Exploratory Data Analysis (Quarto): <br/>
+/code/eda-code/eda-ev-dataset.qmd - exploratory analysis of the electric vehicle dataset <br/>
+/code/eda-code/eda-ev-tax.qmd - exploratory analysis of the tax dataset <br/>
 
+3. Predictive models (Quarto): <br/>
+/code/analysis-code/statistical_analysis.qmd - builds multiple predictive models, visualizes, and compares them.
 
 # Additional Method Details
 
-Often, the main manuscript only allows for an overview description of the methods. Use the supplement to describe all your methods, models and approaches in a lot of detail. Reference specific parts of your code as needed.
+#### Decision Tree Regressor:
+A basic model that splits the data into subsets based on feature values, creating a tree structure. We set hyperparameters such as the maximum depth and minimum samples per leaf to control the model's complexity and prevent overfitting.
 
-{{< pagebreak >}}
+#### Random Forest Regressor:
+An ensemble learning method that constructs multiple decision trees and aggregates their outputs to improve prediction accuracy. We configured key parameters like the number of trees (n_estimators) and the maximum depth, optimizing for a balance between bias and variance.
 
+#### XGBoost Regressor:
+A gradient boosting model known for its efficiency and performance. XGBoost builds trees sequentially, with each new tree aiming to correct errors made by the previous ones. We fine-tuned parameters such as the learning rate (eta), maximum depth, and regularization terms (lambda and alpha) to enhance model performance.
+
+#### HistGradientBoosting Regressor:
+A histogram-based implementation of gradient boosting that is particularly efficient for large datasets. This model discretizes continuous features into bins, reducing memory usage and speeding up training. We set parameters including the number of iterations (max_iter), learning rate, and number of bins (max_bins) to optimize the model.
 
 # Additional results
+## Log-Transformed Histogram Examples
+![SE Health Insurance Deduction](../../../results/figures/histograms/Self-employed%20health%20insurance%20deduction%20amount_histogram.png)
 
-Show additional results here. Those can be some useful exploratory/descriptive figures or tables, or results from additional analyses that didn't make it into the main text.
+![Salary & Wages Amount](../../../results/figures/histograms/Salaries%20and%20wages%20amount_histogram.png)
 
+![Net Premium Tax Credit Amount](../../../results/figures/histograms/Net%20premium%20tax%20credit%20amount_histogram.png)
 
-## Example additional result
+## Log-Transformed Boxplot Examples
+![SE Health Insurance Deduction](../../../results/figures/boxplots/Self-employed%20health%20insurance%20deduction%20amount_boxplot.png)
 
+![Salary & Wages Amount](../../../results/figures/boxplots/Salaries%20and%20wages%20amount_boxplot.png)
 
-@tbl-resulttable1 shows an additional table summarizing a model fit.
+![Net Premium Tax Credit Amount](../../../results/figures/boxplots/Net%20premium%20tax%20credit%20amount_boxplot.png)
 
-```{r}
-#| label: tbl-resulttable1
-#| tbl-cap: "Another fit table."
-#| echo: FALSE
-resulttable1 = readRDS(here("results","tables","resulttable1.rds"))
-knitr::kable(resulttable1)
-```
+## Model Comparison - MAE
+!['MAE'](../../../results/output/model_comparison/MAE.png)
 
+## Model Comparison - MSE
+!['MSE'](../../../results/output/model_comparison/MSE.png)
 
+## Model Comparison - R-squared
+!['R-squared'](../../../results/output/model_comparison/R-squared.png)
 
-@fig-result2 shows a scatterplot figure produced by one of the R scripts.
-
-
-```{r}
-#| label: fig-result2
-#| fig-cap: "Height and weight."
-#| echo: FALSE
-knitr::include_graphics(here("results","figures","height-weight.png"))
-```
-
-
-{{< pagebreak >}}
-
-
-# Discussion
-
-Any additional discussion regarding the supplementary material/findings.
-
-These papers [@mckay2020; @mckay2020a] are good examples of papers published using a fully reproducible setup similar to the one shown in this template. 
-
-{{< pagebreak >}}
-
+## Model Comparison - RMSE
+!['RMSE'](../../../results/output/model_comparison/RMSE.png)
 
 # References
+- Jain, A. (n.d.). Electric vehicle population [Data set]. Kaggle. Retrieved June 6, 2024, from https://www.kaggle.com/datasets/jainaru/electric-vehicle-population <br/>
 
-
-
+- Internal Revenue Service. (n.d.). SOI tax stats - Individual income tax statistics - ZIP code data (SOI). Retrieved June 16, 2024, from https://www.irs.gov/statistics/soi-tax-stats-individual-income-tax-statistics-zip-code-data-soi
