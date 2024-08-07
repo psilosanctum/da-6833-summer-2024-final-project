@@ -20,7 +20,7 @@ website:
             file: code/analysis-code/statistical_analysis.qmd
     right:
       - icon: github 
-        href: https://psilosanctum.github.io/da-6833-summer-2024-final-project/     
+        href: https://github.com/psilosanctum/da-6833-summer-2024-final-project     
 
 format:
   html:
