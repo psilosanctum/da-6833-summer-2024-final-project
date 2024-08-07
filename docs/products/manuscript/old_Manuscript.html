@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Sri Lakshmi Chundru, Collin Real, Joaquin Ramirez, Seth Harris">
+
+<title>EV Predictive Modeling - Using IRS Data to Predict Electric Vehicle Count</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">EV Predictive Modeling</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Report</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analysis" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Analysis</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-analysis">    
+        <li>
+    <a class="dropdown-item" href="../../code/processing-code/pre_process_tax_data.html" rel="" target="">
+ <span class="dropdown-text">Preprocess Tax + EV Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../code/eda-code/eda-ev-dataset.html" rel="" target="">
+ <span class="dropdown-text">EV Exploratory Analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../code/eda-code/eda-ev-tax.html" rel="" target="">
+ <span class="dropdown-text">Log Transform Predictors</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../code/analysis-code/statistical_analysis.html" rel="" target="">
+ <span class="dropdown-text">Predictive Models</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://psilosanctum.github.io/da-6833-summer-2024-final-project/" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="old_Manuscript.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Using IRS Data to Predict Electric Vehicle Count</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Sri Lakshmi Chundru, Collin Real, Joaquin Ramirez, Seth Harris </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="summaryabstract" class="level1">
+<h1>Summary/Abstract</h1>
+<p>Electric vehicle market penetration is an important topic of interest for a variety of government agencies and automotive companies in terms of planning future charging infrastructure and inventory management. This project aims to aid this process by creation of a data driven model that can predict the number of electric vehicles in a given zip code based on a variety of factors. The data used in this project was sourced from the Washington State Department of Licensing (DOL) and includes information on Battery Electric Vehicles (BEVs) and Plug-in Hybrid Electric Vehicles (PHEVs) registered in Washington State. The data set contains 181,458 observations and 17 variables, including Vehicle Identification Number (VIN), county, city, model year, electric range, and more. The project will involve data cleaning, exploratory data analysis, and statistical modeling to identify key factors influencing electric vehicle adoption and predict the number of electric vehicles in a given zip code. The results of this project will provide valuable insights for policymakers, urban planners, and automotive companies to support the transition to sustainable transportation.</p>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>The dataset obtained from Kaggle provides detailed information about Battery Electric Vehicles (BEVs) and Plug-in Hybrid Electric Vehicles (PHEVs) registered through the Washington State Department of Licensing (DOL). It comprises 181,458 observations and 17 variables, encompassing key details such as Vehicle Identification Number (VIN), county, city, model year, electric range, and more.This document is an exploratory data analysis of electric vehicle data.</p>
+<p>A second set of data was obtained from the IRS and contains information on electric vehicles, their owners, and the tax benefits they receive. The data was cleaned and processed in R and saved as a CSV file. This data was then combined with thwe data from kaggle to conduct the analysis of data and model creation that predicts number of electric vehicles in a given zip code based on various input varaibles.</p>
+</section>
+<section id="data-set-analysis" class="level1">
+<h1>Data set Analysis</h1>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_rows'</span>, <span class="va">None</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the dataset</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">'../../data/processed-data/brand_model_year_tax_data.csv'</span>).drop(</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'The State Federal Information Processing System (FIPS) code'</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'The State associated with the ZIP code'</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Number of returns [3]'</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    axis <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>data.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">City</th>
+<th data-quarto-table-cell-role="th">State</th>
+<th data-quarto-table-cell-role="th">ZIPCODE</th>
+<th data-quarto-table-cell-role="th">Model Year</th>
+<th data-quarto-table-cell-role="th">Make</th>
+<th data-quarto-table-cell-role="th">Model</th>
+<th data-quarto-table-cell-role="th">Electric Vehicle Type</th>
+<th data-quarto-table-cell-role="th">Clean Alternative Fuel Vehicle (CAFV) Eligibility</th>
+<th data-quarto-table-cell-role="th">Electric Range</th>
+<th data-quarto-table-cell-role="th">Vehicle Count</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">Refundable education credit amount</th>
+<th data-quarto-table-cell-role="th">Net premium tax credit amount</th>
+<th data-quarto-table-cell-role="th">Qualified sick and family leave credit for leave taken before April 1, 2021 amount</th>
+<th data-quarto-table-cell-role="th">Refundable child and dependent care credit</th>
+<th data-quarto-table-cell-role="th">Qualified sick and family leave credit for leave taken after March 31, 2021</th>
+<th data-quarto-table-cell-role="th">Recovery rebate credit amount [15]</th>
+<th data-quarto-table-cell-role="th">Economic impact payment third round amount [16, 17]</th>
+<th data-quarto-table-cell-role="th">Additional Medicare tax amount</th>
+<th data-quarto-table-cell-role="th">Net investment income tax amount</th>
+<th data-quarto-table-cell-role="th">Credited to next year’s estimated tax amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Aberdeen</td>
+<td>WA</td>
+<td>98520</td>
+<td>2011</td>
+<td>NISSAN</td>
+<td>LEAF</td>
+<td>Battery Electric Vehicle (BEV)</td>
+<td>Clean Alternative Fuel Vehicle Eligible</td>
+<td>73.0</td>
+<td>1</td>
+<td>...</td>
+<td>160.0</td>
+<td>189.0</td>
+<td>0.0</td>
+<td>395.0</td>
+<td>11.0</td>
+<td>1287.0</td>
+<td>21390.0</td>
+<td>80.0</td>
+<td>960.0</td>
+<td>1395.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Aberdeen</td>
+<td>WA</td>
+<td>98520</td>
+<td>2013</td>
+<td>FIAT</td>
+<td>500</td>
+<td>Battery Electric Vehicle (BEV)</td>
+<td>Clean Alternative Fuel Vehicle Eligible</td>
+<td>87.0</td>
+<td>3</td>
+<td>...</td>
+<td>160.0</td>
+<td>189.0</td>
+<td>0.0</td>
+<td>395.0</td>
+<td>11.0</td>
+<td>1287.0</td>
+<td>21390.0</td>
+<td>80.0</td>
+<td>960.0</td>
+<td>1395.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Aberdeen</td>
+<td>WA</td>
+<td>98520</td>
+<td>2013</td>
+<td>NISSAN</td>
+<td>LEAF</td>
+<td>Battery Electric Vehicle (BEV)</td>
+<td>Clean Alternative Fuel Vehicle Eligible</td>
+<td>75.0</td>
+<td>2</td>
+<td>...</td>
+<td>160.0</td>
+<td>189.0</td>
+<td>0.0</td>
+<td>395.0</td>
+<td>11.0</td>
+<td>1287.0</td>
+<td>21390.0</td>
+<td>80.0</td>
+<td>960.0</td>
+<td>1395.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Aberdeen</td>
+<td>WA</td>
+<td>98520</td>
+<td>2013</td>
+<td>TESLA</td>
+<td>MODEL S</td>
+<td>Battery Electric Vehicle (BEV)</td>
+<td>Clean Alternative Fuel Vehicle Eligible</td>
+<td>208.0</td>
+<td>2</td>
+<td>...</td>
+<td>160.0</td>
+<td>189.0</td>
+<td>0.0</td>
+<td>395.0</td>
+<td>11.0</td>
+<td>1287.0</td>
+<td>21390.0</td>
+<td>80.0</td>
+<td>960.0</td>
+<td>1395.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Aberdeen</td>
+<td>WA</td>
+<td>98520</td>
+<td>2014</td>
+<td>NISSAN</td>
+<td>LEAF</td>
+<td>Battery Electric Vehicle (BEV)</td>
+<td>Clean Alternative Fuel Vehicle Eligible</td>
+<td>84.0</td>
+<td>1</td>
+<td>...</td>
+<td>160.0</td>
+<td>189.0</td>
+<td>0.0</td>
+<td>395.0</td>
+<td>11.0</td>
+<td>1287.0</td>
+<td>21390.0</td>
+<td>80.0</td>
+<td>960.0</td>
+<td>1395.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Aberdeen</td>
+<td>WA</td>
+<td>98520</td>
+<td>2014</td>
+<td>TESLA</td>
+<td>MODEL S</td>
+<td>Battery Electric Vehicle (BEV)</td>
+<td>Clean Alternative Fuel Vehicle Eligible</td>
+<td>208.0</td>
+<td>2</td>
+<td>...</td>
+<td>160.0</td>
+<td>189.0</td>
+<td>0.0</td>
+<td>395.0</td>
+<td>11.0</td>
+<td>1287.0</td>
+<td>21390.0</td>
+<td>80.0</td>
+<td>960.0</td>
+<td>1395.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Aberdeen</td>
+<td>WA</td>
+<td>98520</td>
+<td>2014</td>
+<td>TOYOTA</td>
+<td>PRIUS PLUG-IN</td>
+<td>Plug-in Hybrid Electric Vehicle (PHEV)</td>
+<td>Not eligible due to low battery range</td>
+<td>6.0</td>
+<td>2</td>
+<td>...</td>
+<td>160.0</td>
+<td>189.0</td>
+<td>0.0</td>
+<td>395.0</td>
+<td>11.0</td>
+<td>1287.0</td>
+<td>21390.0</td>
+<td>80.0</td>
+<td>960.0</td>
+<td>1395.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>Aberdeen</td>
+<td>WA</td>
+<td>98520</td>
+<td>2015</td>
+<td>BMW</td>
+<td>I3</td>
+<td>Plug-in Hybrid Electric Vehicle (PHEV)</td>
+<td>Clean Alternative Fuel Vehicle Eligible</td>
+<td>72.0</td>
+<td>1</td>
+<td>...</td>
+<td>160.0</td>
+<td>189.0</td>
+<td>0.0</td>
+<td>395.0</td>
+<td>11.0</td>
+<td>1287.0</td>
+<td>21390.0</td>
+<td>80.0</td>
+<td>960.0</td>
+<td>1395.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>Aberdeen</td>
+<td>WA</td>
+<td>98520</td>
+<td>2015</td>
+<td>FORD</td>
+<td>C-MAX</td>
+<td>Plug-in Hybrid Electric Vehicle (PHEV)</td>
+<td>Not eligible due to low battery range</td>
+<td>19.0</td>
+<td>3</td>
+<td>...</td>
+<td>160.0</td>
+<td>189.0</td>
+<td>0.0</td>
+<td>395.0</td>
+<td>11.0</td>
+<td>1287.0</td>
+<td>21390.0</td>
+<td>80.0</td>
+<td>960.0</td>
+<td>1395.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>Aberdeen</td>
+<td>WA</td>
+<td>98520</td>
+<td>2015</td>
+<td>FORD</td>
+<td>FUSION</td>
+<td>Plug-in Hybrid Electric Vehicle (PHEV)</td>
+<td>Not eligible due to low battery range</td>
+<td>19.0</td>
+<td>1</td>
+<td>...</td>
+<td>160.0</td>
+<td>189.0</td>
+<td>0.0</td>
+<td>395.0</td>
+<td>11.0</td>
+<td>1287.0</td>
+<td>21390.0</td>
+<td>80.0</td>
+<td>960.0</td>
+<td>1395.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>10 rows × 81 columns</p>
+</div>
+</div>
+</div>
+<p><strong>- (c) Explain the question you want to answer using the data. What will be your outcome(s) of interest (if any)? What (if any) specific predictors will you focus on? What relations/patterns are you looking for in the data?</strong></p>
+<p>Question: What insights can be gleaned from the dataset regarding the electric vehicle landscape ?</p>
+<section id="objectives" class="level2">
+<h2 class="anchored" data-anchor-id="objectives">Objectives:</h2>
+<ul>
+<li>Understand Geographic Distribution: Determine the distribution of electric vehicles across different counties and cities in Washington State.</li>
+<li>Identify Popular Models: Identify the most commonly registered electric vehicle makes and models.</li>
+<li>Analyze Electric Range: Investigate the distribution of electric range among registered electric vehicles.-</li>
+<li>Explore Clean Alternative Fuel Vehicle Eligibility: Examine the eligibility for clean alternative fuel vehicle incentives among different vehicle types.</li>
+</ul>
+</section>
+<section id="outcomes-of-interest" class="level2">
+<h2 class="anchored" data-anchor-id="outcomes-of-interest">Outcomes of Interest</h2>
+<ul>
+<li>Geographic Distribution: The distribution of electric vehicles across counties and cities in Washington State.</li>
+<li>Popular Models: The most frequently registered electric vehicle makes and models.</li>
+<li>Electric Range Analysis: The range distribution and average electric range of registered electric vehicles.</li>
+<li>Clean Alternative Fuel Vehicle Eligibility: The proportion of vehicles eligible for clean alternative fuel vehicle incentives.</li>
+</ul>
+</section>
+<section id="predictors" class="level2">
+<h2 class="anchored" data-anchor-id="predictors">Predictors</h2>
+<ul>
+<li>Geographic Variables: County, City, Postal Code.</li>
+<li>Vehicle Attributes: Model Year, Make, Model, Electric Vehicle Type, Electric Range.</li>
+</ul>
+</section>
+<section id="relationspatterns" class="level2">
+<h2 class="anchored" data-anchor-id="relationspatterns">Relations/Patterns</h2>
+<ul>
+<li>Geographic Distribution: Analyzing clusters of electric vehicles in specific regions.</li>
+<li>Popular Models: Identifying dominant electric vehicle makes and models.</li>
+<li>Electric Range Analysis: Understanding the distribution of electric ranges and potential implications for consumer preferences.</li>
+<li>Clean Alternative Fuel Vehicle Eligibility: Examining eligibility patterns and potential factors influencing eligibility.</li>
+<li>Correlations: Investigating any associations between electric vehicle characteristics and legislative districts or census tracts, which may offer insights into policy implications and consumer behavior.</li>
+</ul>
+<p><strong>(d) As much as you know, suggest how you will analyze it. At this stage in the course, we haven’t covered analysis approaches yet, so you can keep things vague and non-technical here.</strong></p>
+<ul>
+<li>Descriptive Analysis: Summarize the dataset to understand its contents, including summary statistics and frequency tables.</li>
+</ul>
+<p>-Visualization: Use plots and charts to visualize aspects like geographic distribution, electric range, and vehicle types.</p>
+<ul>
+<li><p>Comparative Analysis: Compare different groups within the dataset, such as BEVs vs PHEVs or eligibility for incentives by vehicle type.</p></li>
+<li><p>Correlation Analysis: Explore potential relationships between variables, such as electric range and base MSRP.</p></li>
+<li><p>Geospatial Analysis (optional): Use R packages to analyze spatial patterns in the data.</p></li>
+<li><p>Exploratory Data Analysis (EDA): Engage in exploratory analysis to identify interesting patterns or trends.</p></li>
+</ul>
+<p><strong>(e) You are allowed, but not yet required, to provide background information for the question you plan to answer. For instance you can describe why it’s an interesting question, who else has done similar analyses, how your analysis will be new/different, etc. Similar to what you read in an introduction to a research paper. For the final report, you’ll need these parts. For part 1, they are not required, but you are welcome to already write down some of that. </strong></p>
+</section>
+<section id="primary-research-question-what-insights-can-be-gleaned-from-the-dataset-regarding-the-electric-vehicle-landscape-in-washington-state" class="level2">
+<h2 class="anchored" data-anchor-id="primary-research-question-what-insights-can-be-gleaned-from-the-dataset-regarding-the-electric-vehicle-landscape-in-washington-state">Primary Research Question: What insights can be gleaned from the dataset regarding the electric vehicle landscape in Washington State?</h2>
+<p>Sub-questions:</p>
+<ul>
+<li>How are electric vehicles distributed across different counties, cities, and States?</li>
+<li>Which EV makes and models are most popular?</li>
+<li>What is the range of electric vehicles in terms of electric range and base MSRP?</li>
+<li>How does eligibility for clean alternative fuel vehicle incentives vary among different vehicle types?</li>
+<li>Are there any significant correlations between EV characteristics and geographic or legislative factors?</li>
+</ul>
+<p><strong>(d) Eventually, for your final report, what you write for this part will go into different sections of the full report. Some will go into the introduction, some in the methods section. You can already place these items there, or for now just write them as a single section.</strong></p>
+<p><strong>Introduction</strong> Electric vehicles (EVs), including Battery Electric Vehicles (BEVs) and Plug-in Hybrid Electric Vehicles (PHEVs), are crucial in the global effort to reduce greenhouse gas emissions and dependence on fossil fuels. This dataset, sourced from the Washington State Department of Licensing (DOL) and obtained from Kaggle, provides a comprehensive overview of registered electric vehicles in Washington State. Analyzing this data offers valuable insights into the adoption patterns and characteristics of EVs, informing policies and infrastructure development to further promote sustainable transportation.</p>
+<p><strong>Objectives:</strong></p>
+<p><strong>Geographic Distribution:</strong> Determine the distribution of electric vehicles across different counties and cities. <strong>Popular Models:</strong> Identify the most commonly registered EV makes and models. <strong>Electric Range Analysis:</strong> Investigate the distribution of electric range among registered EVs. <strong>CAFV Eligibility:</strong> Examine the eligibility for clean alternative fuel vehicle incentives among different vehicle types. <strong>Correlation Analysis:</strong> Explore potential correlations between EV characteristics and geographic or legislative factors.</p>
+<p><strong>Methods</strong></p>
+<p><strong>Data Cleaning and Preparation:</strong></p>
+<ul>
+<li>Address missing values and ensure correct data types.</li>
+<li>Transform variables as necessary for analysis.</li>
+</ul>
+<p>To ensure the dataset is ready for analysis, the following steps were undertaken:</p>
+<p><strong>1. Data Import and Initial Inspection:</strong></p>
+<ul>
+<li>The dataset Electric_Vehicle_Population_Data.csv was imported.</li>
+<li>Summary statistics and data types were displayed to understand the initial structure and content of the data.</li>
+<li>UPDATE (6.17.2024) - Downloaded IRS tax data to join with the EV data by zip code
+<ul>
+<li>Tax data provides many financial variables that we will include in our models (i.e.&nbsp;can we predict the amount of EVs per zip code based off tax data?)</li>
+</ul></li>
+<li>Added a geojson file to draw zip codes on a map, will use for visualizations but still figuring out how to elegantly filter the json</li>
+</ul>
+<p><strong>2. Checking for Duplicates:</strong></p>
+<ul>
+<li>Identified and counted the number of duplicate rows in the dataset to avoid redundant information.</li>
+<li>Result: num_duplicates duplicates were found.</li>
+</ul>
+<p><strong>3. Counting Rows with Zero MSRP:</strong></p>
+<ul>
+<li>Counted the number of rows where the Base.MSRP (Manufacturer’s Suggested Retail Price) is zero to identify incomplete pricing data.</li>
+<li>Result: count_zero_msrp rows with zero MSRP were identified.</li>
+</ul>
+<p><strong>4. Checking for Null Values:</strong></p>
+<ul>
+<li>Calculated the total number of null (NA) values in the dataset to address missing data.</li>
+<li>Result: total_na null values were found.</li>
+</ul>
+<p><strong>5. Removing Null Values and Identifying Outliers:</strong></p>
+<ul>
+<li>Filtered out rows with null values to ensure data completeness.</li>
+<li>Identified the maximum Base.MSRP for each electric vehicle type to spot potential outliers.</li>
+<li>Result:The maximum MSRP for each vehicle type was summarized.</li>
+</ul>
+<p><strong>6. Filtering Out Outliers and Zero MSRP:</strong></p>
+<p>Removed the row with an extreme outlier Base.MSRP of 845,000 to prevent distortion in the analysis. Also filtered out rows where Base.MSRP is zero to ensure only valid pricing data is considered. By performing these steps, the dataset was cleaned and prepared, ensuring it is more accurate and reliable for subsequent analysis.</p>
+<p><strong>Descriptive Statistics:</strong></p>
+<ul>
+<li>Compute summary statistics (mean, median, mode, standard deviation) for numerical variables.</li>
+<li>Generate frequency tables for categorical variables.</li>
+</ul>
+<p><strong>Boxplot - Price Distribution vs.&nbsp;Electric Vehicle Type:</strong></p>
+<p>This boxplot compares the price distribution of Battery Electric Vehicles (BEV) and Plug-in Hybrid Electric Vehicles (PHEV). It shows that BEVs have a wider price range with a higher median price compared to PHEVs, which have a more compact price distribution with some outliers.</p>
+<p><strong>Boxplot - Price Distribution vs.&nbsp;Electric Vehicle Type (Clean Alternative Fuel Vehicle Eligible):</strong></p>
+<p>This boxplot illustrates the price distribution based on eligibility for Clean Alternative Fuel Vehicle incentives. Vehicles eligible for the incentive tend to have a higher price range compared to those that are not eligible due to low battery range.</p>
+<p><strong>Boxplot - Price Distribution vs.&nbsp;Electric Vehicle Type (Drive Range):</strong></p>
+<p>This boxplot shows the distribution of drive range for clean alternative fuel vehicle eligible and non-eligible vehicles. Eligible vehicles have a wider and higher range compared to non-eligible vehicles, which have a limited drive range.</p>
+<p><strong>Scatterplot - Electric Vehicle Range Growth over Time:</strong></p>
+<p>This scatterplot depicts the growth in electric vehicle range over time. There is a clear trend showing that the electric range of vehicles has generally increased over the years.</p>
+<p><strong>Boxplot - Price Distribution by Brand:</strong></p>
+<p>This boxplot compares the price distribution of electric vehicles by different brands. Tesla has the highest price range, followed by Porsche. Brands like KIA and Chrysler have lower price distributions.</p>
+<p><strong>Scatterplot - Price vs.&nbsp;Range Correlation:</strong></p>
+<p>This scatterplot shows the correlation between the vehicle price and its electric range. There is a positive correlation where higher-priced vehicles tend to have a longer electric range. These plots provide insights into the price and range variations of electric vehicles based on type, eligibility for incentives, brand, and over time.</p>
+<p><strong>Data Visualization:</strong></p>
+<ul>
+<li>Create bar charts, histograms, and pie charts to visualize distributions.</li>
+<li>Use scatter plots and box plots to explore relationships between variables.</li>
+<li>Generate geographic maps to visualize EV distribution across the state.</li>
+</ul>
+<p><strong>Comparative Analysis:</strong></p>
+<ul>
+<li>Compare BEVs and PHEVs in terms of electric range and base MSRP.</li>
+<li>Analyze differences in CAFV eligibility across makes and models.</li>
+</ul>
+<p><strong>Correlation Analysis:</strong></p>
+<ul>
+<li>Calculate correlation coefficients for numerical variables.</li>
+<li>Use cross-tabulations to explore relationships between categorical and numerical variables.</li>
+</ul>
+<p><strong>Exploratory Data Analysis (EDA):</strong></p>
+<p>-Perform in-depth analysis to identify trends, patterns, or outliers. -Use advanced visualization techniques for deeper insights.</p>
+<p><strong>Statistical Model</strong> - First iteration of models - Produced a few statistically significant tax metrics for predicting the number of EVs in a given zip code - Washington demographics datasets could further enhance our analysis</p>
+<p><strong>Conclusion:</strong></p>
+<p>By analyzing the electric vehicle registration data for Washington State, this project aims to uncover significant patterns and trends that can inform policy decisions and infrastructure planning. The insights gained from this analysis will contribute to the broader understanding of EV adoption and support the transition towards a more sustainable transportation future.</p>
+<div style="page-break-after: always;"></div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
